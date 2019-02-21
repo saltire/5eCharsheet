@@ -2,6 +2,17 @@ import React from 'react';
 import { Picker, StyleSheet } from 'react-native';
 
 
+const styles = StyleSheet.create({
+  select: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 0,
+    backgroundColor: '#fff',
+  },
+});
+
 export default function Dropdown({ title, values, value, onUpdate }) {
   return (
     <Picker
@@ -14,14 +25,3 @@ export default function Dropdown({ title, values, value, onUpdate }) {
     </Picker>
   );
 }
-
-const styles = StyleSheet.create({
-  select: {
-    flex: 1,
-    height: 40,
-    marginHorizontal: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-    backgroundColor: '#fff',
-  },
-});

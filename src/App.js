@@ -1,10 +1,41 @@
 import React, { Component } from 'react';
-import { Button, Modal, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Ability from './Ability';
 import Dropdown from './Dropdown';
 import { races, classes, backgrounds, alignments, abilities } from './data';
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: '#333',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 5,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 0,
+    backgroundColor: '#fff',
+    lineHeight: 40,
+  },
+  text: {
+    height: 40,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 0,
+    backgroundColor: '#fff',
+    lineHeight: 40,
+  },
+});
 
 export default class App extends Component {
   constructor(props) {
@@ -18,7 +49,7 @@ export default class App extends Component {
         class: '',
         background: '',
         alignment: '',
-        abilities: abilities.reduce((abs, ab, i) => Object.assign(abs, { [ab]: 10 + i }), {}),
+        abilities: abilities.reduce((abs, ab) => Object.assign(abs, { [ab]: null }), {}),
       },
       modal: null,
     };
@@ -86,16 +117,17 @@ export default class App extends Component {
           />
         </View>
 
-        <View style={styles.row}>
-          {abilities.map(ability => (
-            <Ability
-              key={ability}
-              label={ability}
-              score={char.abilities[ability]}
-              onPress={() => this.setState({ modal: 'abilities' })}
-            />
-          ))}
-        </View>
+        <TouchableOpacity onPress={() => this.setState({ modal: 'abilities' })}>
+          <View style={styles.row}>
+            {abilities.map(ability => (
+              <Ability
+                key={ability}
+                label={ability}
+                score={char.abilities[ability]}
+              />
+            ))}
+          </View>
+        </TouchableOpacity>
 
         <Modal
           visible={!!modal}
@@ -113,34 +145,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    backgroundColor: '#333',
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    margin: 5,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    marginHorizontal: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-    backgroundColor: '#fff',
-    lineHeight: 40,
-  },
-  text: {
-    height: 40,
-    marginHorizontal: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-    backgroundColor: '#fff',
-    lineHeight: 40,
-  },
-});
