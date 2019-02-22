@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Ability from './Ability';
+import AbilityEditor from './AbilityEditor';
 import Dropdown from './Dropdown';
 import { races, classes, backgrounds, alignments, abilities } from './data';
 
@@ -35,6 +36,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     lineHeight: 40,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+    padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, .5)',
+  },
+  modal: {
+    borderRadius: 5,
+    backgroundColor: 'white',
+    elevation: 10,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+  },
 });
 
 export default class App extends Component {
@@ -49,14 +65,20 @@ export default class App extends Component {
         class: '',
         background: '',
         alignment: '',
-        abilities: abilities.reduce((abs, ab) => Object.assign(abs, { [ab]: null }), {}),
+        abilities: abilities.reduce((abs, name) => Object.assign(abs, { [name]: null }), {}),
       },
       modal: null,
     };
+
+    this.closeModal = this.closeModal.bind(this);
   }
 
   updateChar(prop, value) {
     this.setState(({ char }) => ({ char: Object.assign({}, char, { [prop]: value }) }));
+  }
+
+  closeModal() {
+    this.setState({ modal: null });
   }
 
   render() {
@@ -69,9 +91,7 @@ export default class App extends Component {
             title='Create your character'
             color='red'
             onPress={() => this.setState({ modal: 'basic' })}
-          >
-            Create your character
-          </Button>
+          />
         </View>
 
         <View style={styles.row}>
@@ -117,7 +137,7 @@ export default class App extends Component {
           />
         </View>
 
-        <TouchableOpacity onPress={() => this.setState({ modal: 'abilities' })}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.setState({ modal: 'abilities' })}>
           <View style={styles.row}>
             {abilities.map(ability => (
               <Ability
@@ -133,11 +153,18 @@ export default class App extends Component {
           visible={!!modal}
           transparent
           animationType='fade'
-          onRequestClose={() => this.setState({ modal: null })}
+          onRequestClose={this.closeModal}
         >
-          <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center', margin: 50 }}>
-            <View style={{ backgroundColor: 'yellow' }}>
-              <Text>Modal</Text>
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <AbilityEditor
+                abilities={char.abilities}
+                onAccept={(values) => {
+                  this.updateChar('abilities', values);
+                  this.closeModal();
+                }}
+                onCancel={this.closeModal}
+              />
             </View>
           </View>
         </Modal>
