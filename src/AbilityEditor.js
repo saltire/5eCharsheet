@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { mod } from './Ability';
 import { abilities as names } from './data';
+import { mod, roll } from './utils';
 
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   header: {
-    marginBottom: 20,
+    marginVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   row: {
     flexDirection: 'row',
-    marginBottom: 5,
+    marginVertical: 5,
   },
   name: {
     flex: 1,
@@ -52,26 +53,51 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     lineHeight: 30,
   },
-  bottomButtons: {
+  flexButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 15,
+    marginHorizontal: -5,
+    marginVertical: 10,
+  },
+  buttonContainer: {
+    flex: 1,
+    marginHorizontal: 5,
   },
 });
 
-const scores = [15, 14, 13, 12, 10, 8];
+const FlexButton = ({ ...props }) => (
+  <View style={styles.buttonContainer}>
+    <Button {...props} />
+  </View>
+);
 
 export default class AbilityEditor extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      abilities: names.reduce((abs, name, i) => Object.assign(abs,
-        { [name]: props.abilities[name] || scores[i] }), {}),
+      abilities: props.abilities,
     };
+
+    this.setSimpleScores = this.setSimpleScores.bind(this);
+    this.rollScores = this.rollScores.bind(this);
   }
 
-  switch(name1, name2) {
+  setSimpleScores() {
+    this.resetScores([15, 14, 13, 12, 10, 8]);
+  }
+
+  rollScores() {
+    this.resetScores([...Array(6)].map(() => roll(4, 6, 3)));
+  }
+
+  resetScores(scores) {
+    this.setState({
+      abilities: names.reduce((abs, name, i) => Object.assign(abs, { [name]: scores[i] }), {}),
+    });
+  }
+
+  move(name1, name2) {
     this.setState(({ abilities }) => ({
       abilities: Object.assign({}, abilities, {
         [name1]: abilities[name2],
@@ -88,24 +114,29 @@ export default class AbilityEditor extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>Ability Scores</Text>
 
+        <View style={styles.flexButtons}>
+          <FlexButton title='Simple' onPress={this.setSimpleScores} />
+          <FlexButton title='Roll' onPress={this.rollScores} />
+        </View>
+
         {Object.entries(abilities).map(([name, score], i) => (
           <View key={name} style={styles.row}>
             <Text style={styles.name}>{name}</Text>
 
             <TouchableOpacity
-              style={[styles.moveButton, i === 5 ? styles.disabled : {}]}
-              disabled={i === 5}
+              style={[styles.moveButton, (i === 5 || !score) ? styles.disabled : {}]}
+              disabled={i === 5 || !score}
               activeOpacity={0.8}
-              onPress={() => this.switch(name, Object.keys(abilities)[i + 1])}
+              onPress={() => this.move(name, Object.keys(abilities)[i + 1])}
             >
               <Text style={styles.moveButtonText}>▼</Text>
             </TouchableOpacity>
             <Text style={styles.value}>{score}</Text>
             <TouchableOpacity
-              style={[styles.moveButton, i === 0 ? styles.disabled : {}]}
-              disabled={i === 0}
+              style={[styles.moveButton, (i === 0 || !score) ? styles.disabled : {}]}
+              disabled={i === 0 || !score}
               activeOpacity={0.8}
-              onPress={() => this.switch(name, Object.keys(abilities)[i - 1])}
+              onPress={() => this.move(name, Object.keys(abilities)[i - 1])}
             >
               <Text style={styles.moveButtonText}>▲</Text>
             </TouchableOpacity>
@@ -114,9 +145,9 @@ export default class AbilityEditor extends Component {
           </View>
         ))}
 
-        <View style={styles.bottomButtons}>
-          <Button title='Accept' onPress={() => onAccept(abilities)} />
-          <Button title='Cancel' onPress={onCancel} />
+        <View style={styles.flexButtons}>
+          <FlexButton title='Accept' onPress={() => onAccept(abilities)} />
+          <FlexButton title='Cancel' onPress={onCancel} />
         </View>
       </View>
     );

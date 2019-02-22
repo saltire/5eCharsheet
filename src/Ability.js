@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { mod } from './utils';
+
 
 const styles = StyleSheet.create({
   ability: {
@@ -17,13 +19,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
 });
-
-export function mod(score) {
-  const modVal = score ? Math.floor(score / 2) - 5 : '';
-  const sign = score ? (modVal > 0 ? '+' : (modVal < 0 ? '-' : '')) : '';
-
-  return `${sign}${modVal}`;
-}
 
 export default function Ability({ label, score }) {
   return (
