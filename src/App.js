@@ -62,6 +62,7 @@ export default class App extends Component {
         name: '',
         level: 1,
         race: '',
+        subrace: '',
         class: '',
         background: '',
         alignment: '',
@@ -83,6 +84,8 @@ export default class App extends Component {
 
   render() {
     const { char, modal } = this.state;
+
+    const race = races.find(r => r.label === char.race);
 
     return (
       <View style={styles.container}>
@@ -108,11 +111,21 @@ export default class App extends Component {
         <View style={styles.row}>
           <Dropdown
             title='Race'
-            values={races}
+            values={races.map(r => r.label)}
             value={char.race}
             onUpdate={value => this.updateChar('race', value)}
           />
 
+          <Dropdown
+            title='Subrace'
+            enabled={!!(race && race.subraces)}
+            values={((race && race.subraces) || []).map(r => r.label)}
+            value={char.subrace}
+            onUpdate={value => this.updateChar('subrace', value)}
+          />
+        </View>
+
+        <View style={styles.row}>
           <Dropdown
             title='Class'
             values={classes}

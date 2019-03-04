@@ -11,12 +11,16 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     backgroundColor: '#fff',
   },
+  disabled: {
+    opacity: 0.8,
+  },
 });
 
-export default function Dropdown({ title, values, value, onUpdate }) {
+export default function Dropdown({ title, values, value, enabled, onUpdate }) {
   return (
     <Picker
-      style={styles.select}
+      style={[styles.select, enabled === false ? styles.disabled : {}]}
+      enabled={enabled}
       selectedValue={value}
       onValueChange={newVal => (newVal && onUpdate(newVal))}
     >

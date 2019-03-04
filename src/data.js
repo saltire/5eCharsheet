@@ -1,13 +1,66 @@
 export const races = [
-  'Dragonborn',
-  'Dwarf',
-  'Elf',
-  'Gnome',
-  'Half-Elf',
-  'Half-Orc',
-  'Halfling',
-  'Human',
-  'Tiefling',
+  {
+    label: 'Dragonborn',
+  },
+  {
+    label: 'Dwarf',
+    subraces: [
+      {
+        label: 'Hill Dwarf',
+      },
+      {
+        label: 'Mountain Dwarf',
+      },
+    ],
+  },
+  {
+    label: 'Elf',
+    subraces: [
+      {
+        label: 'High Elf',
+      },
+      {
+        label: 'Wood Elf',
+      },
+      {
+        label: 'Dark Elf (Drow)',
+      },
+    ],
+  },
+  {
+    label: 'Gnome',
+    subraces: [
+      {
+        label: 'Forest Gnome',
+      },
+      {
+        label: 'Rock Gnome',
+      },
+    ],
+  },
+  {
+    label: 'Half-Elf',
+  },
+  {
+    label: 'Half-Orc',
+  },
+  {
+    label: 'Halfling',
+    subraces: [
+      {
+        label: 'Lightfoot',
+      },
+      {
+        label: 'Stout',
+      },
+    ],
+  },
+  {
+    label: 'Human',
+  },
+  {
+    label: 'Tiefling',
+  },
 ];
 
 export const classes = [
