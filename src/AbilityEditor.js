@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import { abilities as names } from './data';
 import { mod, roll } from './utils';
@@ -18,40 +19,29 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    marginVertical: 5,
   },
-  name: {
-    flex: 1,
+  rowText: {
+    height: 40,
     fontSize: 20,
-    lineHeight: 30,
+    lineHeight: 40,
   },
-  value: {
-    width: 30,
-    marginHorizontal: 5,
+  expand: {
+    flex: 1,
+  },
+  score: {
+    width: 40,
+    height: 30,
+    marginVertical: 5,
+    borderRadius: 5,
+    backgroundColor: '#ddd',
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    lineHeight: 30,
-  },
-  moveButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 5,
-    backgroundColor: '#ddd',
-  },
-  moveButtonText: {
-    textAlign: 'center',
-    lineHeight: 30,
-  },
-  disabled: {
-    opacity: 0.25,
   },
   mod: {
     width: 30,
     marginStart: 15,
-    fontSize: 20,
     textAlign: 'right',
-    lineHeight: 30,
   },
   flexButtons: {
     flexDirection: 'row',
@@ -119,31 +109,39 @@ export default class AbilityEditor extends Component {
           <FlexButton title='Roll' onPress={this.rollScores} />
         </View>
 
-        {Object.entries(abilities).map(([name, score], i) => (
-          <View key={name} style={styles.row}>
-            <Text style={styles.name}>{name}</Text>
-
-            <TouchableOpacity
-              style={[styles.moveButton, (i === 5 || !score) ? styles.disabled : {}]}
-              disabled={i === 5 || !score}
-              activeOpacity={0.8}
-              onPress={() => this.move(name, Object.keys(abilities)[i + 1])}
-            >
-              <Text style={styles.moveButtonText}>▼</Text>
-            </TouchableOpacity>
-            <Text style={styles.value}>{score}</Text>
-            <TouchableOpacity
-              style={[styles.moveButton, (i === 0 || !score) ? styles.disabled : {}]}
-              disabled={i === 0 || !score}
-              activeOpacity={0.8}
-              onPress={() => this.move(name, Object.keys(abilities)[i - 1])}
-            >
-              <Text style={styles.moveButtonText}>▲</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.mod}>{mod(score)}</Text>
+        <View style={styles.row}>
+          <View style={styles.expand}>
+            {Object.keys(abilities).map(name => (
+              <Text key={name} style={styles.rowText}>{name}</Text>
+            ))}
           </View>
-        ))}
+
+          <View>
+            <DraggableFlatList
+              data={Object.values(abilities)}
+              keyExtractor={(item, index) => `${index}`}
+              renderItem={({ item, move, moveEnd }) => (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPressIn={move}
+                  onPressOut={moveEnd}
+                >
+                  <Text style={[styles.score, { opacity: item ? 1 : 0 }]}>{item}</Text>
+                </TouchableOpacity>
+              )}
+              onMoveEnd={({ data }) => this.setState({
+                abilities: Object.keys(abilities)
+                  .reduce((a, name, i) => Object.assign(a, { [name]: data[i] }), {}),
+              })}
+            />
+          </View>
+
+          <View>
+            {Object.entries(abilities).map(([name, score]) => (
+              <Text key={name} style={[styles.rowText, styles.mod]}>{mod(score)}</Text>
+            ))}
+          </View>
+        </View>
 
         <View style={styles.flexButtons}>
           <FlexButton title='Accept' onPress={() => onAccept(abilities)} />

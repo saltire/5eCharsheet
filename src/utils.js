@@ -1,6 +1,6 @@
 export function mod(score) {
   const modVal = score ? Math.floor(score / 2) - 5 : '';
-  const sign = score ? (modVal > 0 ? '+' : (modVal < 0 ? '-' : '')) : '';
+  const sign = (score && modVal > 0) ? '+' : '';
 
   return `${sign}${modVal}`;
 }
