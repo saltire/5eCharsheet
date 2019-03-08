@@ -3,8 +3,9 @@ import { Button, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } fr
 
 import Ability from './Ability';
 import AbilityEditor from './AbilityEditor';
+import AlignmentEditor from './AlignmentEditor';
 import Dropdown from './Dropdown';
-import { races, classes, backgrounds, alignments, abilities } from './data';
+import { races, classes, backgrounds, abilities } from './data';
 
 
 const styles = StyleSheet.create({
@@ -36,20 +37,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     lineHeight: 40,
   },
+  expand: {
+    flex: 1,
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
     padding: 20,
     backgroundColor: 'rgba(0, 0, 0, .5)',
-  },
-  modal: {
-    borderRadius: 5,
-    backgroundColor: 'white',
-    elevation: 10,
-    shadowColor: 'black',
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
   },
 });
 
@@ -156,12 +152,13 @@ export default class App extends Component {
             onUpdate={value => this.updateChar('background', value)}
           />
 
-          <Dropdown
-            title='Alignment'
-            values={alignments}
-            value={char.alignment}
-            onUpdate={value => this.updateChar('alignment', value)}
-          />
+          <TouchableOpacity
+            style={styles.expand}
+            activeOpacity={0.8}
+            onPress={() => this.setState({ modal: 'alignment' })}
+          >
+            <Text style={styles.text}>{char.alignment || 'Alignment'}</Text>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.setState({ modal: 'abilities' })}>
@@ -178,23 +175,40 @@ export default class App extends Component {
         </TouchableOpacity>
 
         <Modal
-          visible={!!modal}
+          visible={modal === 'alignment'}
           transparent
           animationType='fade'
           onRequestClose={this.closeModal}
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
-              <AbilityEditor
-                abilities={char.abilities}
-                racialMods={racialMods}
-                onAccept={(values) => {
-                  this.updateChar('abilities', values);
+              <AlignmentEditor
+                alignment={char.alignment}
+                onAccept={(value) => {
+                  this.updateChar('alignment', value);
                   this.closeModal();
                 }}
-                onCancel={this.closeModal}
               />
             </View>
+          </View>
+        </Modal>
+
+        <Modal
+          visible={modal === 'abilities'}
+          transparent
+          animationType='fade'
+          onRequestClose={this.closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <AbilityEditor
+              abilities={char.abilities}
+              racialMods={racialMods}
+              onAccept={(values) => {
+                this.updateChar('abilities', values);
+                this.closeModal();
+              }}
+              onCancel={this.closeModal}
+            />
           </View>
         </Modal>
       </View>

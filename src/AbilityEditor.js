@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    elevation: 10,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
   },
   header: {
     marginVertical: 10,
