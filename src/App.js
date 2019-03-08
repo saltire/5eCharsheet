@@ -5,7 +5,10 @@ import Ability from './Ability';
 import AbilityEditor from './AbilityEditor';
 import AlignmentEditor from './AlignmentEditor';
 import Dropdown from './Dropdown';
-import { races, classes, backgrounds, abilities } from './data';
+
+import classes from './data/classes';
+import races from './data/races';
+import { backgrounds, abilities } from './data/misc';
 
 
 const styles = StyleSheet.create({
@@ -138,7 +141,7 @@ export default class App extends Component {
         <View style={styles.row}>
           <Dropdown
             title='Class'
-            values={classes}
+            values={classes.map(c => c.label)}
             value={char.class}
             onUpdate={value => this.updateChar('class', value)}
           />

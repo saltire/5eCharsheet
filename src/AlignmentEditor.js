@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { alignments } from './data';
+import { alignments } from './data/misc';
 
 
 const styles = StyleSheet.create({

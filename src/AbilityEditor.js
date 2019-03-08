@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
-import { abilities as names } from './data';
+import { abilities as names } from './data/misc';
 import { mod, roll, signed } from './utils';
 
 
