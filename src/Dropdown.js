@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     height: 40,
     marginHorizontal: 5,
     paddingHorizontal: 10,
-    paddingVertical: 0,
     backgroundColor: '#fff',
   },
   disabled: {

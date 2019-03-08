@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Modal, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Ability from './Ability';
 import AbilityEditor from './AbilityEditor';
 import AlignmentEditor from './AlignmentEditor';
 import Dropdown from './Dropdown';
+import { HeaderBox, TextBox, TouchableTextBox } from './textBoxes';
 
 import classes from './data/classes';
 import races from './data/races';
@@ -31,30 +32,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 0,
     backgroundColor: '#fff',
+    fontSize: 16,
     lineHeight: 40,
-  },
-  text: {
-    height: 40,
-    marginHorizontal: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 0,
-    backgroundColor: '#fff',
-    lineHeight: 40,
-  },
-  expand: {
-    flex: 1,
-  },
-  box: {
-    flex: 1,
-    marginHorizontal: 5,
-    backgroundColor: '#fff',
-  },
-  boxHeader: {
-    textAlign: 'center',
-  },
-  boxMain: {
-    fontSize: 30,
-    textAlign: 'center',
   },
   modalContainer: {
     flex: 1,
@@ -130,11 +109,12 @@ export default class App extends Component {
           <TextInput
             style={styles.input}
             placeholder='Name'
+            placeholderTextColor='#999'
             value={char.text}
             onChangeText={text => this.updateChar('name', text)}
           />
 
-          <Text style={styles.text}>{char.level}</Text>
+          <TextBox>{char.level}</TextBox>
         </View>
 
         <View style={styles.row}>
@@ -171,13 +151,12 @@ export default class App extends Component {
             onUpdate={value => this.updateChar('background', value)}
           />
 
-          <TouchableOpacity
-            style={styles.expand}
-            activeOpacity={0.8}
+          <TouchableTextBox
+            placeholder='Alignment'
             onPress={() => this.setState({ modal: 'alignment' })}
           >
-            <Text style={styles.text}>{char.alignment || 'Alignment'}</Text>
-          </TouchableOpacity>
+            {char.alignment}
+          </TouchableTextBox>
         </View>
 
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.setState({ modal: 'abilities' })}>
@@ -194,15 +173,8 @@ export default class App extends Component {
         </TouchableOpacity>
 
         <View style={styles.row}>
-          <View style={styles.box}>
-            <Text style={styles.boxHeader}>Hit Dice</Text>
-            <Text style={styles.boxMain}>{clss ? `${char.level}d${clss.hitDie}` : ' '}</Text>
-          </View>
-
-          <View style={styles.box}>
-            <Text style={styles.boxHeader}>Hit Points</Text>
-            <Text style={styles.boxMain}>{this.getHitPoints() || ' '}</Text>
-          </View>
+          <HeaderBox header='Hit Dice'>{clss && `${char.level}d${clss.hitDie}`}</HeaderBox>
+          <HeaderBox header='Hit Points'>{this.getHitPoints()}</HeaderBox>
         </View>
 
         <Modal
@@ -212,15 +184,13 @@ export default class App extends Component {
           onRequestClose={this.closeModal}
         >
           <View style={styles.modalContainer}>
-            <View style={styles.modal}>
-              <AlignmentEditor
-                alignment={char.alignment}
-                onAccept={(value) => {
-                  this.updateChar('alignment', value);
-                  this.closeModal();
-                }}
-              />
-            </View>
+            <AlignmentEditor
+              alignment={char.alignment}
+              onAccept={(value) => {
+                this.updateChar('alignment', value);
+                this.closeModal();
+              }}
+            />
           </View>
         </Modal>
 
