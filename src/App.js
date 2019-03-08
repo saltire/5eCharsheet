@@ -5,6 +5,7 @@ import Ability from './Ability';
 import AbilityEditor from './AbilityEditor';
 import AlignmentEditor from './AlignmentEditor';
 import Dropdown from './Dropdown';
+import SkillEditor from './SkillEditor';
 import { HeaderBox, TextBox, TouchableTextBox } from './textBoxes';
 
 import classes from './data/classes';
@@ -59,6 +60,7 @@ export default class App extends Component {
         background: '',
         alignment: '',
         abilities: abilities.reduce((abs, name) => Object.assign(abs, { [name]: null }), {}),
+        skills: [],
       },
       modal: null,
     };
@@ -66,17 +68,17 @@ export default class App extends Component {
     this.closeModal = this.closeModal.bind(this);
   }
 
-  getRacialAbilityMods() {
-    const { char: { race, subrace } } = this.state;
+  getAbilityMods() {
+    const { char } = this.state;
 
-    const raceData = races.find(r => r.label === race);
-    const racialMods = Object.assign({}, (raceData && raceData.abilities) || {});
-    const subraceData = raceData && (raceData.subraces || []).find(r => r.label === subrace);
-    Object.entries((subraceData && subraceData.abilities) || {}).forEach(([ability, score]) => {
-      racialMods[ability] = (racialMods[ability] || 0) + score;
+    const race = races.find(r => r.label === char.race);
+    const abilityMods = Object.assign({}, (race && race.abilities) || {});
+    const subrace = race && (race.subraces || []).find(r => r.label === char.subrace);
+    Object.entries((subrace && subrace.abilities) || {}).forEach(([ability, score]) => {
+      abilityMods[ability] = (abilityMods[ability] || 0) + score;
     });
 
-    return racialMods;
+    return abilityMods;
   }
 
   getHitPoints() {
@@ -85,6 +87,21 @@ export default class App extends Component {
     const clss = classes.find(c => c.label === char.class);
     const con = char.abilities.Constitution;
     return clss && con && (clss.hitDie + mod(con));
+  }
+
+  getProficiencyBonus() {
+    const { char } = this.state;
+
+    return char.level === 1 ? 2 : 0;
+  }
+
+  getProficientSkills() {
+    const { char } = this.state;
+
+    const race = races.find(r => r.label === char.race);
+    const profSkills = new Set((race && race.skills) || []);
+
+    return Array.from(profSkills);
   }
 
   updateChar(prop, value) {
@@ -99,9 +116,10 @@ export default class App extends Component {
     const { char, modal } = this.state;
 
     const race = races.find(r => r.label === char.race);
-    const racialMods = this.getRacialAbilityMods();
-
     const clss = classes.find(c => c.label === char.class);
+    const abilityMods = this.getAbilityMods();
+    const proficientSkills = this.getProficientSkills();
+    const profBonus = this.getProficiencyBonus();
 
     return (
       <View style={styles.container}>
@@ -166,7 +184,7 @@ export default class App extends Component {
                 key={ability}
                 label={ability}
                 score={char.abilities[ability]}
-                racialMod={racialMods[ability]}
+                racialMod={abilityMods[ability]}
               />
             ))}
           </View>
@@ -175,6 +193,15 @@ export default class App extends Component {
         <View style={styles.row}>
           <HeaderBox header='Hit Dice'>{clss && `${char.level}d${clss.hitDie}`}</HeaderBox>
           <HeaderBox header='Hit Points'>{this.getHitPoints()}</HeaderBox>
+        </View>
+
+        <View style={styles.row}>
+          <TouchableTextBox
+            placeholder='Skills'
+            onPress={() => this.setState({ modal: 'skills' })}
+          >
+            {(char.skills || []).join(', ')}
+          </TouchableTextBox>
         </View>
 
         <Modal
@@ -203,9 +230,30 @@ export default class App extends Component {
           <View style={styles.modalContainer}>
             <AbilityEditor
               abilities={char.abilities}
-              racialMods={racialMods}
+              abilityMods={abilityMods}
               onAccept={(values) => {
                 this.updateChar('abilities', values);
+                this.closeModal();
+              }}
+              onCancel={this.closeModal}
+            />
+          </View>
+        </Modal>
+
+        <Modal
+          visible={modal === 'skills'}
+          transparent
+          animationType='fade'
+          onRequestClose={this.closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <SkillEditor
+              abilities={char.abilities}
+              skills={char.skills}
+              proficientSkills={proficientSkills}
+              profBonus={profBonus}
+              onAccept={(values) => {
+                this.updateChar('skills', values);
                 this.closeModal();
               }}
               onCancel={this.closeModal}

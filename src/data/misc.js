@@ -34,3 +34,78 @@ export const abilities = [
   'Wisdom',
   'Charisma',
 ];
+
+export const skills = [
+  {
+    label: 'Athletics',
+    ability: 'Strength',
+  },
+  {
+    label: 'Acrobatics',
+    ability: 'Dexterity',
+  },
+  {
+    label: 'Sleight of Hand',
+    ability: 'Dexterity',
+  },
+  {
+    label: 'Stealth',
+    ability: 'Dexterity',
+  },
+  {
+    label: 'Arcana',
+    ability: 'Intelligence',
+  },
+  {
+    label: 'History',
+    ability: 'Intelligence',
+  },
+  {
+    label: 'Investigation',
+    ability: 'Intelligence',
+  },
+  {
+    label: 'Nature',
+    ability: 'Intelligence',
+  },
+  {
+    label: 'Religion',
+    ability: 'Intelligence',
+  },
+  {
+    label: 'Animal Handling',
+    ability: 'Wisdom',
+  },
+  {
+    label: 'Insight',
+    ability: 'Wisdom',
+  },
+  {
+    label: 'Medicine',
+    ability: 'Wisdom',
+  },
+  {
+    label: 'Perception',
+    ability: 'Wisdom',
+  },
+  {
+    label: 'Survival',
+    ability: 'Wisdom',
+  },
+  {
+    label: 'Deception',
+    ability: 'Charisma',
+  },
+  {
+    label: 'Intimidation',
+    ability: 'Charisma',
+  },
+  {
+    label: 'Performance',
+    ability: 'Charisma',
+  },
+  {
+    label: 'Persuasion',
+    ability: 'Charisma',
+  },
+];

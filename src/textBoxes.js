@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   textBox: {
     flex: 1,
     justifyContent: 'center',
+    minHeight: 40,
     marginHorizontal: 5,
     paddingHorizontal: 10,
     backgroundColor: '#fff',

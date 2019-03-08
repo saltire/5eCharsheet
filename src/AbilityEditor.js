@@ -110,7 +110,7 @@ export default class AbilityEditor extends Component {
   }
 
   render() {
-    const { racialMods, onAccept, onCancel } = this.props;
+    const { abilityMods, onAccept, onCancel } = this.props;
     const { abilities } = this.state;
 
     const complete = Object.values(abilities).every(Boolean);
@@ -151,7 +151,7 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.keys(abilities).map(ability => (
               <Text key={ability} style={[styles.rowText, styles.mod]}>
-                {signed(racialMods[ability])}
+                {signed(abilityMods[ability])}
               </Text>
             ))}
           </View>
@@ -159,7 +159,7 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.entries(abilities).map(([ability, score]) => (
               <Text key={ability} style={styles.score}>
-                {score && (score + (racialMods[ability] || 0))}
+                {score && (score + (abilityMods[ability] || 0))}
               </Text>
             ))}
           </View>
@@ -167,7 +167,7 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.entries(abilities).map(([ability, score]) => (
               <Text key={ability} style={[styles.rowText, styles.mod, styles.bold]}>
-                {signed(mod(score && (score + (racialMods[ability] || 0))))}
+                {signed(mod(score && (score + (abilityMods[ability] || 0))))}
               </Text>
             ))}
           </View>
