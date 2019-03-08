@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 50,
     backgroundColor: 'rgba(0, 0, 0, .5)',
   },
 });
@@ -72,8 +73,8 @@ export default class App extends Component {
     const { char } = this.state;
 
     const race = races.find(r => r.label === char.race);
-    const abilityMods = Object.assign({}, (race && race.abilities) || {});
     const subrace = race && (race.subraces || []).find(r => r.label === char.subrace);
+    const abilityMods = Object.assign({}, (race && race.abilities) || {});
     Object.entries((subrace && subrace.abilities) || {}).forEach(([ability, score]) => {
       abilityMods[ability] = (abilityMods[ability] || 0) + score;
     });
@@ -143,13 +144,14 @@ export default class App extends Component {
             onUpdate={value => this.updateChar('race', value)}
           />
 
-          <Dropdown
-            title='Subrace'
-            enabled={!!(race && race.subraces)}
-            values={((race && race.subraces) || []).map(r => r.label)}
-            value={char.subrace}
-            onUpdate={value => this.updateChar('subrace', value)}
-          />
+          {!!(race && race.subraces) && (
+            <Dropdown
+              title={race.subraceLabel || 'Subrace'}
+              values={((race && race.subraces) || []).map(r => r.label)}
+              value={char.subrace}
+              onUpdate={value => this.updateChar('subrace', value)}
+            />
+          )}
         </View>
 
         <View style={styles.row}>

@@ -11,6 +11,7 @@ export default [
       'Common',
       'Draconic',
     ],
+    subraceLabel: 'Ancestry',
     subraces: [
       {
         label: 'Black',

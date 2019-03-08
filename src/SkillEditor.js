@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Switch, Text, View } from 'react-native';
 
 import { abilities as abilityNames, skills as skillData } from './data/misc';
+import { mod } from './utils';
 
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     borderRadius: 5,
     backgroundColor: 'white',
     elevation: 10,
@@ -14,58 +14,88 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 20,
   },
+  scrollContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
   header: {
-    marginBottom: 10,
+    marginVertical: 20,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  abilityHeaderRow: {
+    flexDirection: 'row',
+    marginTop: 15,
+    paddingBottom: 8,
+    marginBottom: 3,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+  },
+  row: {
+    flexDirection: 'row',
+    marginVertical: 1,
+  },
   abilityHeader: {
-    marginTop: 10,
+    flex: 1,
+    fontSize: 16,
     fontWeight: 'bold',
   },
-  skillRow: {
-    flexDirection: 'row',
+  cell: {
+    justifyContent: 'center',
+  },
+  expand: {
+    flex: 1,
   },
   skillName: {
-    flex: 1,
+    fontSize: 16,
   },
   skillNumber: {
     width: 30,
+    fontSize: 16,
+    textAlign: 'right',
   },
 });
 
-const groups = abilityNames
+const sections = abilityNames
   .map(ability => ({
-    ability,
-    skills: skillData.filter(skill => skill.ability === ability),
+    title: ability,
+    data: skillData.filter(skill => skill.ability === ability),
   }))
-  .filter(group => group.skills.length);
+  .filter(section => section.data.length);
 
 export default function SkillEditor({ abilities, proficientSkills, profBonus }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Skills</Text>
 
-      {groups.map(group => (
-        <View key={group.ability}>
-          <View><Text style={styles.abilityHeader}>{group.ability}</Text></View>
-
-          {group.skills.map(skill => (
-            <View key={skill.label} style={styles.skillRow}>
+      <SectionList
+        style={styles.scrollContainer}
+        sections={sections}
+        renderSectionHeader={({ section: { title: ability } }) => (
+          <View style={styles.abilityHeaderRow}>
+            <Text style={styles.abilityHeader}>{ability}</Text>
+            <Text style={styles.skillNumber}>{mod(abilities[ability]) || 0}</Text>
+          </View>
+        )}
+        renderItem={({ item: skill }) => (
+          <View key={skill.label} style={styles.row}>
+            <View style={[styles.cell, styles.expand]}>
               <Text style={styles.skillName}>{skill.label}</Text>
-              <Text style={styles.skillNumber}>{abilities[skill.ability]}</Text>
+            </View>
+            <View style={styles.cell}>
+              <Switch value={proficientSkills.includes(skill.label)} />
+            </View>
+            <View style={styles.cell}>
               <Text style={styles.skillNumber}>
-                {proficientSkills.includes(skill.label) && '✓'}
-              </Text>
-              <Text style={styles.skillNumber}>
-                {(abilities[skill.label] || 0) +
+                {(mod(abilities[skill.ability]) || 0) +
                   (proficientSkills.includes(skill.label) ? profBonus : 0)}
               </Text>
             </View>
-          ))}
-        </View>
-      ))}
+          </View>
+        )}
+        keyExtractor={item => item.label}
+      />
     </View>
   );
 }
