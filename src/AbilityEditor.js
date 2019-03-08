@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  help: {
+    marginTop: 5,
+    textAlign: 'center',
+  },
   columns: {
     flexDirection: 'row',
   },
@@ -109,6 +113,8 @@ export default class AbilityEditor extends Component {
     const { racialMods, onAccept, onCancel } = this.props;
     const { abilities } = this.state;
 
+    const complete = Object.values(abilities).every(Boolean);
+
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Ability Scores</Text>
@@ -161,11 +167,15 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.entries(abilities).map(([ability, score]) => (
               <Text key={ability} style={[styles.rowText, styles.mod, styles.bold]}>
-                {mod(score && (score + (racialMods[ability] || 0)))}
+                {signed(mod(score && (score + (racialMods[ability] || 0))))}
               </Text>
             ))}
           </View>
         </View>
+
+        <Text style={[styles.help, { opacity: complete ? 1 : 0 }]}>
+          Drag scores up or down to reassign them.
+        </Text>
 
         <View style={styles.flexButtons}>
           <FlexButton title='OK' onPress={() => onAccept(abilities)} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { mod } from './utils';
+import { mod, signed } from './utils';
 
 
 const styles = StyleSheet.create({
@@ -27,7 +27,7 @@ export default function Ability({ label, score, racialMod }) {
       <Text style={[styles.abilityText, styles.largeText]}>
         {score ? score + (racialMod || 0) : '-'}
       </Text>
-      <Text style={styles.abilityText}>{mod(score)}</Text>
+      <Text style={styles.abilityText}>{signed(mod(score))}</Text>
     </View>
   );
 }

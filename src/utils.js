@@ -3,7 +3,7 @@ export function signed(num) {
 }
 
 export function mod(score) {
-  return Number.isFinite(score) ? signed(Math.floor(score / 2) - 5) : '';
+  return Number.isFinite(score) ? Math.floor(score / 2) - 5 : '';
 }
 
 export function roll(num, sides, highest) {

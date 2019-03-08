@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Ability from './Ability';
 import AbilityEditor from './AbilityEditor';
@@ -9,6 +9,7 @@ import Dropdown from './Dropdown';
 import classes from './data/classes';
 import races from './data/races';
 import { backgrounds, abilities } from './data/misc';
+import { mod } from './utils';
 
 
 const styles = StyleSheet.create({
@@ -43,6 +44,18 @@ const styles = StyleSheet.create({
   expand: {
     flex: 1,
   },
+  box: {
+    flex: 1,
+    marginHorizontal: 5,
+    backgroundColor: '#fff',
+  },
+  boxHeader: {
+    textAlign: 'center',
+  },
+  boxMain: {
+    fontSize: 30,
+    textAlign: 'center',
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -60,6 +73,7 @@ export default class App extends Component {
       char: {
         name: '',
         level: 1,
+        xp: 0,
         race: '',
         subrace: '',
         class: '',
@@ -86,6 +100,14 @@ export default class App extends Component {
     return racialMods;
   }
 
+  getHitPoints() {
+    const { char } = this.state;
+
+    const clss = classes.find(c => c.label === char.class);
+    const con = char.abilities.Constitution;
+    return clss && con && (clss.hitDie + mod(con));
+  }
+
   updateChar(prop, value) {
     this.setState(({ char }) => ({ char: Object.assign({}, char, { [prop]: value }) }));
   }
@@ -100,16 +122,10 @@ export default class App extends Component {
     const race = races.find(r => r.label === char.race);
     const racialMods = this.getRacialAbilityMods();
 
+    const clss = classes.find(c => c.label === char.class);
+
     return (
       <View style={styles.container}>
-        <View style={styles.row}>
-          <Button
-            title='Create your character'
-            color='red'
-            onPress={() => this.setState({ modal: 'basic' })}
-          />
-        </View>
-
         <View style={styles.row}>
           <TextInput
             style={styles.input}
@@ -176,6 +192,18 @@ export default class App extends Component {
             ))}
           </View>
         </TouchableOpacity>
+
+        <View style={styles.row}>
+          <View style={styles.box}>
+            <Text style={styles.boxHeader}>Hit Dice</Text>
+            <Text style={styles.boxMain}>{clss ? `${char.level}d${clss.hitDie}` : ' '}</Text>
+          </View>
+
+          <View style={styles.box}>
+            <Text style={styles.boxHeader}>Hit Points</Text>
+            <Text style={styles.boxMain}>{this.getHitPoints() || ' '}</Text>
+          </View>
+        </View>
 
         <Modal
           visible={modal === 'alignment'}
