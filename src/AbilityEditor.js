@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import { abilities as names } from './data';
-import { mod, roll } from './utils';
+import { mod, roll, signed } from './utils';
 
 
 const styles = StyleSheet.create({
@@ -17,31 +17,43 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  row: {
+  columns: {
     flexDirection: 'row',
   },
   rowText: {
-    height: 40,
+    height: 30,
+    marginVertical: 5,
     fontSize: 20,
-    lineHeight: 40,
+    lineHeight: 36,
   },
   expand: {
     flex: 1,
   },
-  score: {
+  scoreButton: {
     width: 40,
     height: 30,
     marginVertical: 5,
     borderRadius: 5,
     backgroundColor: '#ddd',
     fontSize: 25,
+    textAlign: 'center',
+  },
+  score: {
+    width: 40,
+    height: 30,
+    marginStart: 15,
+    marginVertical: 5,
+    fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   mod: {
     width: 30,
-    marginStart: 15,
+    marginStart: 5,
     textAlign: 'right',
+  },
+  bold: {
+    fontWeight: 'bold',
   },
   flexButtons: {
     flexDirection: 'row',
@@ -69,35 +81,26 @@ export default class AbilityEditor extends Component {
       abilities: props.abilities,
     };
 
-    this.setSimpleScores = this.setSimpleScores.bind(this);
     this.rollScores = this.rollScores.bind(this);
+    this.useSimpleScores = this.useSimpleScores.bind(this);
   }
 
-  setSimpleScores() {
-    this.resetScores([15, 14, 13, 12, 10, 8]);
-  }
-
-  rollScores() {
-    this.resetScores([...Array(6)].map(() => roll(4, 6, 3)));
-  }
-
-  resetScores(scores) {
+  setScores(scores) {
     this.setState({
       abilities: names.reduce((abs, name, i) => Object.assign(abs, { [name]: scores[i] }), {}),
     });
   }
 
-  move(name1, name2) {
-    this.setState(({ abilities }) => ({
-      abilities: Object.assign({}, abilities, {
-        [name1]: abilities[name2],
-        [name2]: abilities[name1],
-      }),
-    }));
+  rollScores() {
+    this.setScores([...Array(6)].map(() => roll(4, 6, 3)));
+  }
+
+  useSimpleScores() {
+    this.setScores([15, 14, 13, 12, 10, 8]);
   }
 
   render() {
-    const { onAccept, onCancel } = this.props;
+    const { racialMods, onAccept, onCancel } = this.props;
     const { abilities } = this.state;
 
     return (
@@ -105,11 +108,11 @@ export default class AbilityEditor extends Component {
         <Text style={styles.header}>Ability Scores</Text>
 
         <View style={styles.flexButtons}>
-          <FlexButton title='Simple' onPress={this.setSimpleScores} />
+          <FlexButton title='Simple' onPress={this.useSimpleScores} />
           <FlexButton title='Roll' onPress={this.rollScores} />
         </View>
 
-        <View style={styles.row}>
+        <View style={styles.columns}>
           <View style={styles.expand}>
             {Object.keys(abilities).map(name => (
               <Text key={name} style={styles.rowText}>{name}</Text>
@@ -126,25 +129,40 @@ export default class AbilityEditor extends Component {
                   onPressIn={move}
                   onPressOut={moveEnd}
                 >
-                  <Text style={[styles.score, { opacity: item ? 1 : 0 }]}>{item}</Text>
+                  <Text style={[styles.scoreButton, { opacity: item ? 1 : 0 }]}>{item}</Text>
                 </TouchableOpacity>
               )}
-              onMoveEnd={({ data }) => this.setState({
-                abilities: Object.keys(abilities)
-                  .reduce((a, name, i) => Object.assign(a, { [name]: data[i] }), {}),
-              })}
+              onMoveEnd={({ data }) => this.setScores(data)}
             />
           </View>
 
           <View>
-            {Object.entries(abilities).map(([name, score]) => (
-              <Text key={name} style={[styles.rowText, styles.mod]}>{mod(score)}</Text>
+            {Object.keys(abilities).map(ability => (
+              <Text key={ability} style={[styles.rowText, styles.mod]}>
+                {signed(racialMods[ability])}
+              </Text>
+            ))}
+          </View>
+
+          <View>
+            {Object.entries(abilities).map(([ability, score]) => (
+              <Text key={ability} style={styles.score}>
+                {score && (score + (racialMods[ability] || 0))}
+              </Text>
+            ))}
+          </View>
+
+          <View>
+            {Object.entries(abilities).map(([ability, score]) => (
+              <Text key={ability} style={[styles.rowText, styles.mod, styles.bold]}>
+                {mod(score && (score + (racialMods[ability] || 0)))}
+              </Text>
             ))}
           </View>
         </View>
 
         <View style={styles.flexButtons}>
-          <FlexButton title='Accept' onPress={() => onAccept(abilities)} />
+          <FlexButton title='OK' onPress={() => onAccept(abilities)} />
           <FlexButton title='Cancel' onPress={onCancel} />
         </View>
       </View>

@@ -1,8 +1,9 @@
-export function mod(score) {
-  const modVal = score ? Math.floor(score / 2) - 5 : '';
-  const sign = (score && modVal > 0) ? '+' : '';
+export function signed(num) {
+  return Number.isFinite(num) ? `${num > 0 ? '+' : ''}${num}` : '';
+}
 
-  return `${sign}${modVal}`;
+export function mod(score) {
+  return Number.isFinite(score) ? signed(Math.floor(score / 2) - 5) : '';
 }
 
 export function roll(num, sides, highest) {

@@ -74,6 +74,19 @@ export default class App extends Component {
     this.closeModal = this.closeModal.bind(this);
   }
 
+  getRacialAbilityMods() {
+    const { char: { race, subrace } } = this.state;
+
+    const raceData = races.find(r => r.label === race);
+    const racialMods = Object.assign({}, (raceData && raceData.abilities) || {});
+    const subraceData = raceData && (raceData.subraces || []).find(r => r.label === subrace);
+    Object.entries((subraceData && subraceData.abilities) || {}).forEach(([ability, score]) => {
+      racialMods[ability] = (racialMods[ability] || 0) + score;
+    });
+
+    return racialMods;
+  }
+
   updateChar(prop, value) {
     this.setState(({ char }) => ({ char: Object.assign({}, char, { [prop]: value }) }));
   }
@@ -86,6 +99,7 @@ export default class App extends Component {
     const { char, modal } = this.state;
 
     const race = races.find(r => r.label === char.race);
+    const racialMods = this.getRacialAbilityMods();
 
     return (
       <View style={styles.container}>
@@ -157,6 +171,7 @@ export default class App extends Component {
                 key={ability}
                 label={ability}
                 score={char.abilities[ability]}
+                racialMod={racialMods[ability]}
               />
             ))}
           </View>
@@ -172,6 +187,7 @@ export default class App extends Component {
             <View style={styles.modal}>
               <AbilityEditor
                 abilities={char.abilities}
+                racialMods={racialMods}
                 onAccept={(values) => {
                   this.updateChar('abilities', values);
                   this.closeModal();

@@ -20,11 +20,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Ability({ label, score }) {
+export default function Ability({ label, score, racialMod }) {
   return (
     <View style={styles.ability}>
       <Text style={styles.abilityText}>{label.slice(0, 3).toUpperCase()}</Text>
-      <Text style={[styles.abilityText, styles.largeText]}>{score || '-'}</Text>
+      <Text style={[styles.abilityText, styles.largeText]}>
+        {score ? score + (racialMod || 0) : '-'}
+      </Text>
       <Text style={styles.abilityText}>{mod(score)}</Text>
     </View>
   );
