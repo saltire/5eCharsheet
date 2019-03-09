@@ -135,8 +135,8 @@ export default [
           'Shortbow',
           'Longbow',
         ],
-        extraCantrips: 1,
-        extraLanguages: 1,
+        cantripChoices: 1,
+        languageChoices: 1,
       },
       {
         label: 'Wood Elf',
@@ -212,16 +212,16 @@ export default [
     abilities: {
       Charisma: 2,
     },
-    extraAbilities: 2,
+    abilityChoices: 2,
     size: 'Medium',
     speed: 30,
     darkvision: 60,
-    extraSkills: 2,
+    skillChoices: 2,
     languages: [
       'Common',
       'Elvish',
     ],
-    extraLanguages: 1,
+    languageChoices: 1,
   },
   {
     label: 'Half-Orc',
@@ -280,7 +280,7 @@ export default [
     languages: [
       'Common',
     ],
-    extraLanguages: 1,
+    languageChoices: 1,
   },
   {
     label: 'Tiefling',

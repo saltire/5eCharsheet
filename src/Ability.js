@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { mod, signed } from './utils';
+import { mod, signed } from './common/utils';
 
 
 const styles = StyleSheet.create({

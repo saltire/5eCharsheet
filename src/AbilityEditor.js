@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
+import { FlexButtonContainer, FlexButton } from './common/flexButton';
 import { abilities as names } from './data/misc';
-import { mod, roll, signed } from './utils';
+import { mod, roll, signed } from './common/utils';
 
 
 const styles = StyleSheet.create({
@@ -21,10 +22,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  help: {
-    marginTop: 5,
     textAlign: 'center',
   },
   columns: {
@@ -58,30 +55,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   mod: {
-    width: 30,
-    marginStart: 5,
+    width: 35,
     textAlign: 'right',
   },
   bold: {
     fontWeight: 'bold',
   },
+  help: {
+    marginTop: 5,
+    textAlign: 'center',
+  },
   flexButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: -5,
     marginVertical: 10,
   },
-  buttonContainer: {
-    flex: 1,
-    marginHorizontal: 5,
-  },
 });
-
-const FlexButton = ({ ...props }) => (
-  <View style={styles.buttonContainer}>
-    <Button {...props} />
-  </View>
-);
 
 export default class AbilityEditor extends Component {
   constructor(props) {
@@ -119,10 +106,10 @@ export default class AbilityEditor extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>Ability Scores</Text>
 
-        <View style={styles.flexButtons}>
+        <FlexButtonContainer style={styles.flexButtons}>
           <FlexButton title='Simple' onPress={this.useSimpleScores} />
           <FlexButton title='Roll' onPress={this.rollScores} />
-        </View>
+        </FlexButtonContainer>
 
         <View style={styles.columns}>
           <View style={styles.expand}>
@@ -177,10 +164,10 @@ export default class AbilityEditor extends Component {
           Drag scores up or down to reassign them.
         </Text>
 
-        <View style={styles.flexButtons}>
+        <FlexButtonContainer style={styles.flexButtons}>
           <FlexButton title='OK' onPress={() => onAccept(abilities)} />
           <FlexButton title='Cancel' onPress={onCancel} />
-        </View>
+        </FlexButtonContainer>
       </View>
     );
   }

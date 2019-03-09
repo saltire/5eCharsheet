@@ -6,12 +6,12 @@ import AbilityEditor from './AbilityEditor';
 import AlignmentEditor from './AlignmentEditor';
 import Dropdown from './Dropdown';
 import SkillEditor from './SkillEditor';
-import { HeaderBox, TextBox, TouchableTextBox } from './textBoxes';
+import { HeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
 
 import classes from './data/classes';
 import races from './data/races';
 import { backgrounds, abilities } from './data/misc';
-import { mod } from './utils';
+import { mod } from './common/utils';
 
 
 const styles = StyleSheet.create({
@@ -72,7 +72,7 @@ export default class App extends Component {
   getAbilityMods() {
     const { char } = this.state;
 
-    const race = races.find(r => r.label === char.race);
+    const race = this.getRace();
     const subrace = race && (race.subraces || []).find(r => r.label === char.subrace);
     const abilityMods = Object.assign({}, (race && race.abilities) || {});
     Object.entries((subrace && subrace.abilities) || {}).forEach(([ability, score]) => {
@@ -82,27 +82,40 @@ export default class App extends Component {
     return abilityMods;
   }
 
+  getClass() {
+    const { char } = this.state;
+    return classes.find(c => c.label === char.class);
+  }
+
   getHitPoints() {
     const { char } = this.state;
 
-    const clss = classes.find(c => c.label === char.class);
+    const clss = this.getClass();
     const con = char.abilities.Constitution;
     return clss && con && (clss.hitDie + mod(con));
   }
 
   getProficiencyBonus() {
     const { char } = this.state;
-
     return char.level === 1 ? 2 : 0;
   }
 
   getProficientSkills() {
-    const { char } = this.state;
-
-    const race = races.find(r => r.label === char.race);
+    const race = this.getRace();
     const profSkills = new Set((race && race.skills) || []);
 
     return Array.from(profSkills);
+  }
+
+  getRace() {
+    const { char } = this.state;
+    return races.find(r => r.label === char.race);
+  }
+
+  getSkillChoices() {
+    const race = this.getRace();
+    const clss = this.getClass();
+    return ((race && race.skillChoices) || 0) + ((clss && clss.skillChoices) || 0);
   }
 
   updateChar(prop, value) {
@@ -116,9 +129,10 @@ export default class App extends Component {
   render() {
     const { char, modal } = this.state;
 
-    const race = races.find(r => r.label === char.race);
-    const clss = classes.find(c => c.label === char.class);
+    const race = this.getRace();
+    const clss = this.getClass();
     const abilityMods = this.getAbilityMods();
+    const skillChoices = this.getSkillChoices();
     const proficientSkills = this.getProficientSkills();
     const profBonus = this.getProficiencyBonus();
 
@@ -251,8 +265,9 @@ export default class App extends Component {
           <View style={styles.modalContainer}>
             <SkillEditor
               abilities={char.abilities}
-              skills={char.skills}
-              proficientSkills={proficientSkills}
+              skillChoices={skillChoices}
+              chosenSkills={char.skills}
+              otherSkills={proficientSkills}
               profBonus={profBonus}
               onAccept={(values) => {
                 this.updateChar('skills', values);
