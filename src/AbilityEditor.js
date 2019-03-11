@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import { FlexButtonContainer, FlexButton } from './common/flexButton';
-import { abilities as names } from './data/misc';
+import { abilities as abilityNames } from './common/data';
 import { mod, roll, signed } from './common/utils';
 
 
@@ -84,7 +84,8 @@ export default class AbilityEditor extends Component {
 
   setScores(scores) {
     this.setState({
-      abilities: names.reduce((abs, name, i) => Object.assign(abs, { [name]: scores[i] }), {}),
+      abilities: abilityNames
+        .reduce((abs, name, i) => Object.assign(abs, { [name]: scores[i] }), {}),
     });
   }
 
@@ -97,7 +98,7 @@ export default class AbilityEditor extends Component {
   }
 
   render() {
-    const { abilityMods, onAccept, onCancel } = this.props;
+    const { bonuses, onAccept, onCancel } = this.props;
     const { abilities } = this.state;
 
     const complete = Object.values(abilities).every(Boolean);
@@ -138,7 +139,7 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.keys(abilities).map(ability => (
               <Text key={ability} style={[styles.rowText, styles.mod]}>
-                {signed(abilityMods[ability])}
+                {signed(bonuses[ability])}
               </Text>
             ))}
           </View>
@@ -146,7 +147,7 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.entries(abilities).map(([ability, score]) => (
               <Text key={ability} style={styles.score}>
-                {score && (score + (abilityMods[ability] || 0))}
+                {score && (score + (bonuses[ability] || 0))}
               </Text>
             ))}
           </View>
@@ -154,7 +155,7 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.entries(abilities).map(([ability, score]) => (
               <Text key={ability} style={[styles.rowText, styles.mod, styles.bold]}>
-                {score ? signed(mod(score + (abilityMods[ability] || 0))) : '–'}
+                {score ? signed(mod(score + (bonuses[ability] || 0))) : '–'}
               </Text>
             ))}
           </View>

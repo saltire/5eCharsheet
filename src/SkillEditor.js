@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { SectionList, StyleSheet, Switch, Text, View } from 'react-native';
 
 import { FlexButtonContainer, FlexButton } from './common/flexButton';
-import { abilities as abilityNames, skills } from './data/misc';
+import { abilities as abilityNames, skills } from './common/data';
 import { mod, signed } from './common/utils';
 
 

@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Dropdown({ title, values, value, enabled, onUpdate }) {
+export default function Dropdown({ title, values, value, enabled, onChange }) {
   return (
     <Picker
       style={[styles.select, enabled === false ? styles.disabled : {}]}
       enabled={enabled}
       selectedValue={value}
-      onValueChange={newVal => (newVal && onUpdate(newVal))}
+      onValueChange={newVal => (newVal && onChange(newVal))}
     >
       <Picker.Item label={title} value='' color='#999' />
       {values.map(val => <Picker.Item key={val} label={val} value={val} />)}

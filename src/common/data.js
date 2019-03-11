@@ -1,3 +1,12 @@
+import classes from './data/classes';
+import races from './data/races';
+
+
+export {
+  classes,
+  races,
+};
+
 export const backgrounds = [
   'Acolyte',
   'Charlatan',
