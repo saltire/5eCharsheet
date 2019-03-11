@@ -6,7 +6,7 @@ import AlignmentEditor from './AlignmentEditor';
 import ModalContainer from './ModalContainer';
 import SkillEditor from './SkillEditor';
 import Sheet from './Sheet';
-import { FlexButtonContainer, FlexButton } from './common/flexButtons';
+// import { FlexButtonContainer, FlexButton } from './common/flexButtons';
 
 import { abilities } from './common/data';
 
@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#333',
   },
-  buttons: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-  },
+  // buttons: {
+  //   marginVertical: 10,
+  //   paddingHorizontal: 10,
+  // },
 });
 
 export default class App extends Component {
@@ -49,6 +49,10 @@ export default class App extends Component {
     this.updateAndClose = this.updateAndClose.bind(this);
   }
 
+  componentDidMount() {
+    this.loadCharacter();
+  }
+
   async loadCharacter() {
     try {
       const savedChar = await AsyncStorage.getItem('char');
@@ -73,7 +77,8 @@ export default class App extends Component {
   }
 
   updateChar(update) {
-    this.setState(({ char }) => ({ char: Object.assign({}, char, update || {}) }));
+    this.setState(({ char }) => ({ char: Object.assign({}, char, update || {}) }),
+      this.saveCharacter);
   }
 
   closeModal() {
@@ -81,10 +86,8 @@ export default class App extends Component {
   }
 
   updateAndClose(update) {
-    this.setState(({ char }) => ({
-      char: Object.assign({}, char, update || {}),
-      modal: null,
-    }));
+    this.updateChar(update);
+    this.closeModal();
   }
 
   render() {
@@ -92,12 +95,12 @@ export default class App extends Component {
 
     return (
       <View style={[styles.main, { paddingTop: StatusBar.currentHeight }]}>
-        <View style={styles.buttons}>
+        {/* <View style={styles.buttons}>
           <FlexButtonContainer>
             <FlexButton title='Load' onPress={this.loadCharacter} />
             <FlexButton title='Save' onPress={this.saveCharacter} />
           </FlexButtonContainer>
-        </View>
+        </View> */}
 
         <Sheet
           char={char}
