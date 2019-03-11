@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SectionList, StyleSheet, Switch, Text, View } from 'react-native';
 
-import { FlexButtonContainer, FlexButton } from './common/flexButton';
+import { FlexButtonContainer, FlexButton } from './common/flexButtons';
 import { getProficiencyBonus, getProficientSkills, getSkillChoices } from './common/calc';
 import { abilities, skills } from './common/data';
 import { mod, signed } from './common/utils';
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   flexButtons: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
     marginBottom: 20,
   },
 });
@@ -163,10 +163,12 @@ export default class SkillEditor extends Component {
             'Complete your ability scores to calculate skills.'}
         </Text>
 
-        <FlexButtonContainer style={styles.flexButtons}>
-          <FlexButton title='OK' onPress={() => onAccept({ skills: chosenSkills })} />
-          <FlexButton title='Cancel' onPress={onCancel} />
-        </FlexButtonContainer>
+        <View style={styles.flexButtons}>
+          <FlexButtonContainer>
+            <FlexButton title='OK' onPress={() => onAccept({ skills: chosenSkills })} />
+            <FlexButton title='Cancel' onPress={onCancel} />
+          </FlexButtonContainer>
+        </View>
       </View>
     );
   }

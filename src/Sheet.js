@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#333',
   },
   row: {
     flexDirection: 'row',
@@ -48,7 +47,7 @@ export default function Sheet({ char, onUpdate, openEditor }) {
           style={styles.input}
           placeholder='Name'
           placeholderTextColor='#999'
-          value={char.text}
+          value={char.name}
           onChangeText={text => onUpdate({ name: text })}
         />
 
