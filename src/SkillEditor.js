@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { SectionList, StyleSheet, Switch, Text, View } from 'react-native';
 
 import { FlexButtonContainer, FlexButton } from './common/flexButton';
-import { abilities as abilityNames, skills } from './common/data';
+import { getProficiencyBonus, getProficientSkills, getSkillChoices } from './common/calc';
+import { abilities, skills } from './common/data';
 import { mod, signed } from './common/utils';
 
 
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const sections = abilityNames
+const sections = abilities
   .map(ability => ({
     title: ability,
     data: skills.filter(skill => skill.ability === ability),
@@ -86,19 +87,23 @@ export default class SkillEditor extends Component {
   constructor(props) {
     super(props);
 
+    const { char } = props;
+    const otherSkills = getProficientSkills(char);
+
     this.state = {
-      chosenSkills: (props.chosenSkills || [])
-        .filter(skill => !(props.otherSkills || []).includes(skill)),
+      chosenSkills: char.skills.filter(skill => !otherSkills.includes(skill)),
     };
   }
 
   render() {
-    const { abilities, skillChoices, otherSkills, profBonus, onAccept, onCancel } = this.props;
+    const { char, onAccept, onCancel } = this.props;
     const { chosenSkills } = this.state;
 
+    const profBonus = getProficiencyBonus(char);
+    const otherSkills = getProficientSkills(char);
+    const skillChoices = getSkillChoices(char);
     const allSkills = chosenSkills.concat(otherSkills);
-
-    const abilitiesComplete = Object.values(abilities).every(Boolean);
+    const abilitiesComplete = Object.values(char.abilities).every(Boolean);
     const choicesRemaining = Math.max(0, skillChoices - chosenSkills.length);
 
     return (
@@ -111,7 +116,7 @@ export default class SkillEditor extends Component {
           renderSectionHeader={({ section: { title: ability } }) => (
             <View style={styles.abilityHeaderRow}>
               <Text style={styles.abilityHeader}>{ability}</Text>
-              <Text style={styles.abilityMod}>{signed(mod(abilities[ability]))}</Text>
+              <Text style={styles.abilityMod}>{signed(mod(char.abilities[ability]))}</Text>
             </View>
           )}
           renderItem={({ item: skill }) => (
@@ -120,7 +125,7 @@ export default class SkillEditor extends Component {
                 <Text style={styles.skillName}>{skill.label}</Text>
               </View>
 
-              {abilities[skill.ability] && (
+              {char.abilities[skill.ability] && (
                 <View style={styles.cell}>
                   <Switch
                     value={allSkills.includes(skill.label)}
@@ -141,9 +146,9 @@ export default class SkillEditor extends Component {
               )}
 
               <View style={styles.cell}>
-                {abilities[skill.ability] ? (
+                {char.abilities[skill.ability] ? (
                   <Text style={styles.skillNumber}>
-                    {(mod(abilities[skill.ability]) || 0) +
+                    {(mod(char.abilities[skill.ability]) || 0) +
                       (allSkills.includes(skill.label) ? profBonus : 0)}
                   </Text>
                 ) : <Text style={styles.skillPlaceholder}>–</Text>}

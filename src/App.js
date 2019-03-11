@@ -6,9 +6,6 @@ import ModalContainer from './ModalContainer';
 import SkillEditor from './SkillEditor';
 import Sheet from './Sheet';
 
-import {
-  getAbilityBonuses, getProficiencyBonus, getProficientSkills, getSkillChoices,
-} from './common/calc';
 import { abilities } from './common/data';
 
 
@@ -47,11 +44,6 @@ export default class App extends Component {
   render() {
     const { char, modal } = this.state;
 
-    const abilityBonuses = getAbilityBonuses(char);
-    const profBonus = getProficiencyBonus(char);
-    const proficientSkills = getProficientSkills(char);
-    const skillChoices = getSkillChoices(char);
-
     return (
       <>
         <Sheet
@@ -62,7 +54,7 @@ export default class App extends Component {
 
         <ModalContainer visible={modal === 'alignment'} close={this.closeModal}>
           <AlignmentEditor
-            alignment={char.alignment}
+            char={char}
             onAccept={(value) => {
               this.updateChar({ alignment: value });
               this.closeModal();
@@ -72,8 +64,7 @@ export default class App extends Component {
 
         <ModalContainer visible={modal === 'abilities'} close={this.closeModal}>
           <AbilityEditor
-            abilities={char.abilities}
-            bonuses={abilityBonuses}
+            char={char}
             onAccept={(values) => {
               this.updateChar({ abilities: values });
               this.closeModal();
@@ -84,11 +75,7 @@ export default class App extends Component {
 
         <ModalContainer visible={modal === 'skills'} close={this.closeModal}>
           <SkillEditor
-            abilities={char.abilities}
-            skillChoices={skillChoices}
-            chosenSkills={char.skills}
-            otherSkills={proficientSkills}
-            profBonus={profBonus}
+            char={char}
             onAccept={(values) => {
               this.updateChar({ skills: values });
               this.closeModal();

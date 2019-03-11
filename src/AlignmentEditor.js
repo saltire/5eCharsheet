@@ -44,7 +44,9 @@ const rows = {
   e: alignments.filter(a => /Evil$/.test(a)),
 };
 
-export default function AlignmentEditor({ alignment, onAccept }) {
+export default function AlignmentEditor({ char, onAccept }) {
+  const { alignment } = char;
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Alignment</Text>

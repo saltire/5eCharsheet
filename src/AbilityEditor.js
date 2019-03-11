@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import { FlexButtonContainer, FlexButton } from './common/flexButton';
+import { getAbilityBonuses } from './common/calc';
 import { abilities as abilityNames } from './common/data';
 import { mod, roll, signed } from './common/utils';
 
@@ -74,8 +75,10 @@ export default class AbilityEditor extends Component {
   constructor(props) {
     super(props);
 
+    const { char: { abilities } } = props;
+
     this.state = {
-      abilities: props.abilities,
+      abilities: Object.assign({}, abilities),
     };
 
     this.rollScores = this.rollScores.bind(this);
@@ -98,9 +101,10 @@ export default class AbilityEditor extends Component {
   }
 
   render() {
-    const { bonuses, onAccept, onCancel } = this.props;
+    const { char, onAccept, onCancel } = this.props;
     const { abilities } = this.state;
 
+    const bonuses = getAbilityBonuses(char);
     const complete = Object.values(abilities).every(Boolean);
 
     return (

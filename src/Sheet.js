@@ -5,7 +5,8 @@ import Ability from './Ability';
 import Dropdown from './Dropdown';
 import { HeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
 
-import { getRace, getClass, getAbilityBonuses, getHitPoints } from './common/calc';
+import { getRace, getClass, getAbilityBonuses, getHitPoints, getProficientSkills }
+  from './common/calc';
 import { abilities, backgrounds, classes, races } from './common/data';
 
 
@@ -38,6 +39,7 @@ export default function Sheet({ char, onUpdate, openEditor }) {
   const clss = getClass(char);
   const abilityBonuses = getAbilityBonuses(char);
   const hp = getHitPoints(char);
+  const allSkills = char.skills.concat(getProficientSkills(char));
 
   return (
     <View style={styles.container}>
@@ -119,7 +121,7 @@ export default function Sheet({ char, onUpdate, openEditor }) {
           placeholder='Skills'
           onPress={() => openEditor('skills')}
         >
-          {(char.skills || []).join(', ')}
+          {allSkills.sort().join(', ')}
         </TouchableTextBox>
       </View>
     </View>
