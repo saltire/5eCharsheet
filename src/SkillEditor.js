@@ -61,6 +61,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'right',
   },
+  skillPlaceholder: {
+    fontSize: 20,
+    textAlign: 'right',
+  },
   help: {
     marginVertical: 10,
     textAlign: 'center',
@@ -117,32 +121,33 @@ export default class SkillEditor extends Component {
               </View>
 
               {abilities[skill.ability] && (
-                <>
-                  <View style={styles.cell}>
-                    <Switch
-                      value={allSkills.includes(skill.label)}
-                      disabled={otherSkills.includes(skill.label) ||
-                        (!chosenSkills.includes(skill.label) && !choicesRemaining)}
-                      onValueChange={newValue => this.setState((prevState) => {
-                        const newSkills = new Set(prevState.chosenSkills);
-                        if (newValue) {
-                          newSkills.add(skill.label);
-                        }
-                        else {
-                          newSkills.delete(skill.label);
-                        }
-                        return { chosenSkills: Array.from(newSkills).sort() };
-                      })}
-                    />
-                  </View>
-                  <View style={styles.cell}>
-                    <Text style={styles.skillNumber}>
-                      {(mod(abilities[skill.ability]) || 0) +
-                        (allSkills.includes(skill.label) ? profBonus : 0)}
-                    </Text>
-                  </View>
-                </>
+                <View style={styles.cell}>
+                  <Switch
+                    value={allSkills.includes(skill.label)}
+                    disabled={otherSkills.includes(skill.label) ||
+                      (!chosenSkills.includes(skill.label) && !choicesRemaining)}
+                    onValueChange={newValue => this.setState((prevState) => {
+                      const newSkills = new Set(prevState.chosenSkills);
+                      if (newValue) {
+                        newSkills.add(skill.label);
+                      }
+                      else {
+                        newSkills.delete(skill.label);
+                      }
+                      return { chosenSkills: Array.from(newSkills).sort() };
+                    })}
+                  />
+                </View>
               )}
+
+              <View style={styles.cell}>
+                {abilities[skill.ability] ? (
+                  <Text style={styles.skillNumber}>
+                    {(mod(abilities[skill.ability]) || 0) +
+                      (allSkills.includes(skill.label) ? profBonus : 0)}
+                  </Text>
+                ) : <Text style={styles.skillPlaceholder}>–</Text>}
+              </View>
             </View>
           )}
           keyExtractor={item => item.label}

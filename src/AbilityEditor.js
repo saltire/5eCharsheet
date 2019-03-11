@@ -154,7 +154,7 @@ export default class AbilityEditor extends Component {
           <View>
             {Object.entries(abilities).map(([ability, score]) => (
               <Text key={ability} style={[styles.rowText, styles.mod, styles.bold]}>
-                {signed(mod(score && (score + (abilityMods[ability] || 0))))}
+                {score ? signed(mod(score + (abilityMods[ability] || 0))) : '–'}
               </Text>
             ))}
           </View>

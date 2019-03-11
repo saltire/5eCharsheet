@@ -200,7 +200,7 @@ export default class App extends Component {
                 key={ability}
                 label={ability}
                 score={char.abilities[ability]}
-                racialMod={abilityMods[ability]}
+                abilityMod={abilityMods[ability]}
               />
             ))}
           </View>
