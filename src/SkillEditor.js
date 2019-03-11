@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { SectionList, StyleSheet, Switch, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Text, View } from 'react-native';
 
+import Toggle from './Toggle';
 import { FlexButtonContainer, FlexButton } from './common/flexButtons';
-import { getProficiencyBonus, getProficientSkills, getSkillChoices } from './common/calc';
+import { getClass, getProficiencyBonus, getProficientSkills, getSkillChoices } from './common/calc';
 import { abilities, skills } from './common/data';
 import { mod, signed } from './common/utils';
 
@@ -99,6 +100,7 @@ export default class SkillEditor extends Component {
     const { char, onAccept, onCancel } = this.props;
     const { chosenSkills } = this.state;
 
+    const skillOptions = (getClass(char) || {}).skillOptions || [];
     const profBonus = getProficiencyBonus(char);
     const otherSkills = getProficientSkills(char);
     const skillChoices = getSkillChoices(char);
@@ -127,11 +129,15 @@ export default class SkillEditor extends Component {
 
               {char.abilities[skill.ability] && (
                 <View style={styles.cell}>
-                  <Switch
+                  <Toggle
+                    colorOn='#c00'
+                    colorOff='#666'
+                    trackColor='#ddd'
                     value={allSkills.includes(skill.label)}
                     disabled={otherSkills.includes(skill.label) ||
+                      !skillOptions.includes(skill.label) ||
                       (!chosenSkills.includes(skill.label) && !choicesRemaining)}
-                    onValueChange={newValue => this.setState((prevState) => {
+                    onChange={newValue => this.setState((prevState) => {
                       const newSkills = new Set(prevState.chosenSkills);
                       if (newValue) {
                         newSkills.add(skill.label);
