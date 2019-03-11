@@ -31,6 +31,7 @@ export default class App extends Component {
 
     this.closeModal = this.closeModal.bind(this);
     this.updateChar = this.updateChar.bind(this);
+    this.updateAndClose = this.updateAndClose.bind(this);
   }
 
   updateChar(update) {
@@ -39,6 +40,13 @@ export default class App extends Component {
 
   closeModal() {
     this.setState({ modal: null });
+  }
+
+  updateAndClose(update) {
+    this.setState(({ char }) => ({
+      char: Object.assign({}, char, update || {}),
+      modal: null,
+    }));
   }
 
   render() {
@@ -55,20 +63,14 @@ export default class App extends Component {
         <ModalContainer visible={modal === 'alignment'} close={this.closeModal}>
           <AlignmentEditor
             char={char}
-            onAccept={(value) => {
-              this.updateChar({ alignment: value });
-              this.closeModal();
-            }}
+            onAccept={this.updateAndClose}
           />
         </ModalContainer>
 
         <ModalContainer visible={modal === 'abilities'} close={this.closeModal}>
           <AbilityEditor
             char={char}
-            onAccept={(values) => {
-              this.updateChar({ abilities: values });
-              this.closeModal();
-            }}
+            onAccept={this.updateAndClose}
             onCancel={this.closeModal}
           />
         </ModalContainer>
@@ -76,10 +78,7 @@ export default class App extends Component {
         <ModalContainer visible={modal === 'skills'} close={this.closeModal}>
           <SkillEditor
             char={char}
-            onAccept={(values) => {
-              this.updateChar({ skills: values });
-              this.closeModal();
-            }}
+            onAccept={this.updateAndClose}
             onCancel={this.closeModal}
           />
         </ModalContainer>

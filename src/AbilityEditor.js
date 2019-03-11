@@ -170,7 +170,7 @@ export default class AbilityEditor extends Component {
         </Text>
 
         <FlexButtonContainer style={styles.flexButtons}>
-          <FlexButton title='OK' onPress={() => onAccept(abilities)} />
+          <FlexButton title='OK' onPress={() => onAccept({ abilities })} />
           <FlexButton title='Cancel' onPress={onCancel} />
         </FlexButtonContainer>
       </View>

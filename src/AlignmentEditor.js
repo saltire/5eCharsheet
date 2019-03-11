@@ -54,7 +54,11 @@ export default function AlignmentEditor({ char, onAccept }) {
       {Object.entries(rows).map(([key, cells]) => (
         <View key={key} style={styles.row}>
           {cells.map(value => (
-            <TouchableOpacity key={value} activeOpacity={0.8} onPress={() => onAccept(value)}>
+            <TouchableOpacity
+              key={value}
+              activeOpacity={0.8}
+              onPress={() => onAccept({ alignment: value })}
+            >
               <View style={styles.cell}>
                 <Text style={value === alignment ? styles.selected : []}>{value}</Text>
               </View>

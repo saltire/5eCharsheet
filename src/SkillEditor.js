@@ -164,7 +164,7 @@ export default class SkillEditor extends Component {
         </Text>
 
         <FlexButtonContainer style={styles.flexButtons}>
-          <FlexButton title='OK' onPress={() => onAccept(chosenSkills)} />
+          <FlexButton title='OK' onPress={() => onAccept({ skills: chosenSkills })} />
           <FlexButton title='Cancel' onPress={onCancel} />
         </FlexButtonContainer>
       </View>
