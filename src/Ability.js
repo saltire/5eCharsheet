@@ -27,7 +27,7 @@ export default function Ability({ label, score, abilityMod }) {
       <Text style={[styles.abilityText, styles.largeText]}>
         {score ? score + (abilityMod || 0) : '–'}
       </Text>
-      <Text style={styles.abilityText}>{signed(mod(score))}</Text>
+      <Text style={styles.abilityText}>{signed(mod(score)) || ' '}</Text>
     </View>
   );
 }

@@ -41,3 +41,16 @@ export const HeaderBox = ({ header, placeholder, children }) => (
     <Text style={{ fontSize: 30, textAlign: 'center' }}>{children || placeholder || ' '}</Text>
   </View>
 );
+
+export const TouchableHeaderBox = ({ header, placeholder, children, onPress }) => (
+  <TouchableOpacity
+    style={{ flex: 1, marginHorizontal: 5 }}
+    activeOpacity={0.8}
+    onPress={onPress}
+  >
+    <View style={{ paddingHorizontal: 10, backgroundColor: '#fff' }}>
+      <Text style={{ textAlign: 'center' }}>{header}</Text>
+      <Text style={{ fontSize: 30, textAlign: 'center' }}>{children || placeholder || ' '}</Text>
+    </View>
+  </TouchableOpacity>
+);

@@ -3,12 +3,13 @@ import { AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
 
 import AbilityEditor from './AbilityEditor';
 import AlignmentEditor from './AlignmentEditor';
+import LanguageEditor from './LanguageEditor';
 import ModalContainer from './ModalContainer';
 import SkillEditor from './SkillEditor';
 import Sheet from './Sheet';
-// import { FlexButtonContainer, FlexButton } from './common/flexButtons';
+import { FlexButtonContainer, FlexButton } from './common/flexButtons';
 
-import { abilities } from './common/data';
+import { blankChar } from './common/data';
 
 
 const styles = StyleSheet.create({
@@ -16,10 +17,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#333',
   },
-  // buttons: {
-  //   marginVertical: 10,
-  //   paddingHorizontal: 10,
-  // },
+  buttons: {
+    marginVertical: 10,
+    paddingHorizontal: 10,
+  },
 });
 
 export default class App extends Component {
@@ -27,22 +28,12 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      char: {
-        name: '',
-        level: 1,
-        xp: 0,
-        race: '',
-        subrace: '',
-        class: '',
-        background: '',
-        alignment: '',
-        abilities: abilities.reduce((abs, name) => Object.assign(abs, { [name]: null }), {}),
-        skills: [],
-      },
+      char: blankChar(),
       modal: null,
     };
 
     this.closeModal = this.closeModal.bind(this);
+    this.clearCharacter = this.clearCharacter.bind(this);
     this.loadCharacter = this.loadCharacter.bind(this);
     this.saveCharacter = this.saveCharacter.bind(this);
     this.updateChar = this.updateChar.bind(this);
@@ -51,6 +42,10 @@ export default class App extends Component {
 
   componentDidMount() {
     this.loadCharacter();
+  }
+
+  clearCharacter() {
+    this.setState({ char: blankChar() }, this.saveCharacter);
   }
 
   async loadCharacter() {
@@ -95,12 +90,13 @@ export default class App extends Component {
 
     return (
       <View style={[styles.main, { paddingTop: StatusBar.currentHeight }]}>
-        {/* <View style={styles.buttons}>
+        <View style={styles.buttons}>
           <FlexButtonContainer>
-            <FlexButton title='Load' onPress={this.loadCharacter} />
-            <FlexButton title='Save' onPress={this.saveCharacter} />
+            {/* <FlexButton title='Load' onPress={this.loadCharacter} /> */}
+            {/* <FlexButton title='Save' onPress={this.saveCharacter} /> */}
+            <FlexButton title='Clear' onPress={this.clearCharacter} />
           </FlexButtonContainer>
-        </View> */}
+        </View>
 
         <Sheet
           char={char}
@@ -117,6 +113,14 @@ export default class App extends Component {
 
         <ModalContainer visible={modal === 'abilities'} close={this.closeModal}>
           <AbilityEditor
+            char={char}
+            onAccept={this.updateAndClose}
+            onCancel={this.closeModal}
+          />
+        </ModalContainer>
+
+        <ModalContainer visible={modal === 'languages'} close={this.closeModal}>
+          <LanguageEditor
             char={char}
             onAccept={this.updateAndClose}
             onCancel={this.closeModal}

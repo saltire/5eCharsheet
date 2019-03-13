@@ -6,11 +6,14 @@ export function mod(score) {
   return Number.isFinite(score) ? Math.floor(score / 2) - 5 : '';
 }
 
+export function sum(...values) {
+  return values.reduce((s, v) => (s + (v || 0)), 0);
+}
+
 export function roll(num, sides, highest) {
-  return [...Array(num)]
+  return sum(...[...Array(num)]
     .map(() => Math.ceil(Math.random() * sides))
     .sort()
     .reverse()
-    .slice(0, highest || num)
-    .reduce((sum, value) => (sum + value), 0);
+    .slice(0, highest || num));
 }

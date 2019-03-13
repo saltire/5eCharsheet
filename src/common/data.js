@@ -7,6 +7,27 @@ export {
   races,
 };
 
+export const abilities = [
+  'Strength',
+  'Dexterity',
+  'Constitution',
+  'Intelligence',
+  'Wisdom',
+  'Charisma',
+];
+
+export const alignments = [
+  'Lawful Good',
+  'Neutral Good',
+  'Chaotic Good',
+  'Lawful Neutral',
+  'True Neutral',
+  'Chaotic Neutral',
+  'Lawful Evil',
+  'Neutral Evil',
+  'Chaotic Evil',
+];
+
 export const backgrounds = [
   'Acolyte',
   'Charlatan',
@@ -23,25 +44,23 @@ export const backgrounds = [
   'Urchin',
 ];
 
-export const alignments = [
-  'Lawful Good',
-  'Neutral Good',
-  'Chaotic Good',
-  'Lawful Neutral',
-  'True Neutral',
-  'Chaotic Neutral',
-  'Lawful Evil',
-  'Neutral Evil',
-  'Chaotic Evil',
-];
-
-export const abilities = [
-  'Strength',
-  'Dexterity',
-  'Constitution',
-  'Intelligence',
-  'Wisdom',
-  'Charisma',
+export const languages = [
+  'Common',
+  'Dwarvish',
+  'Elvish',
+  'Giant',
+  'Gnomish',
+  'Goblin',
+  'Halfling',
+  'Orc',
+  'Abyssal',
+  'Celestial',
+  'Draconic',
+  'Deep Speech',
+  'Infernal',
+  'Primordial',
+  'Sylvan',
+  'Undercommon',
 ];
 
 export const skills = [
@@ -118,3 +137,17 @@ export const skills = [
     ability: 'Charisma',
   },
 ];
+
+export const blankChar = () => ({
+  name: '',
+  level: 1,
+  xp: 0,
+  race: '',
+  subrace: '',
+  class: '',
+  background: '',
+  alignment: '',
+  abilities: abilities.reduce((abs, name) => Object.assign(abs, { [name]: null }), {}),
+  skills: [],
+  languages: [],
+});

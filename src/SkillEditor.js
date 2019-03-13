@@ -92,7 +92,7 @@ export default class SkillEditor extends Component {
     const otherSkills = getProficientSkills(char);
 
     this.state = {
-      chosenSkills: char.skills.filter(skill => !otherSkills.includes(skill)),
+      chosenSkills: (char.skills || []).filter(skill => !otherSkills.includes(skill)),
     };
   }
 
@@ -135,8 +135,8 @@ export default class SkillEditor extends Component {
                     trackColor='#ddd'
                     value={allSkills.includes(skill.label)}
                     disabled={otherSkills.includes(skill.label) ||
-                      !skillOptions.includes(skill.label) ||
-                      (!chosenSkills.includes(skill.label) && !choicesRemaining)}
+                      (!chosenSkills.includes(skill.label) &&
+                        (!choicesRemaining || !skillOptions.includes(skill.label)))}
                     onChange={newValue => this.setState((prevState) => {
                       const newSkills = new Set(prevState.chosenSkills);
                       if (newValue) {

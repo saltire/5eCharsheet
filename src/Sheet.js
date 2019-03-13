@@ -3,11 +3,14 @@ import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Ability from './Ability';
 import Dropdown from './Dropdown';
-import { HeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
+import { HeaderBox, TouchableHeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
 
-import { getRace, getClass, getAbilityBonuses, getHitPoints, getProficientSkills }
-  from './common/calc';
+import {
+  getRace, getClass, getAbilityBonuses, getHitPoints, getLanguages,
+  getProficientSkills, getProficiencyBonus, getSpeed,
+} from './common/calc';
 import { abilities, backgrounds, classes, races } from './common/data';
+import { mod } from './common/utils';
 
 
 const styles = StyleSheet.create({
@@ -38,7 +41,10 @@ export default function Sheet({ char, onUpdate, openEditor }) {
   const clss = getClass(char);
   const abilityBonuses = getAbilityBonuses(char);
   const hp = getHitPoints(char);
-  const allSkills = char.skills.concat(getProficientSkills(char));
+  const proficiency = getProficiencyBonus(char);
+  const allSkills = (char.skills || []).concat(getProficientSkills(char));
+  const allLanguages = (char.languages || []).concat(getLanguages(char));
+  const speed = getSpeed(char, race);
 
   return (
     <View style={styles.container}>
@@ -111,6 +117,23 @@ export default function Sheet({ char, onUpdate, openEditor }) {
       </TouchableOpacity>
 
       <View style={styles.row}>
+        <TouchableHeaderBox
+          header='Inspiration'
+          onPress={() => onUpdate({ inspiration: !char.inspiration })}
+        >
+          {char.inspiration ? '✹' : ' '}
+        </TouchableHeaderBox>
+
+        <HeaderBox header='Proficiency'>{proficiency}</HeaderBox>
+
+        <HeaderBox header='Initiative'>
+          {mod(char.abilities.Dexterity) || '–'}
+        </HeaderBox>
+
+        <HeaderBox header='Speed'>{speed || '–'}</HeaderBox>
+      </View>
+
+      <View style={styles.row}>
         <HeaderBox header='Hit Dice'>{clss && `${char.level}d${clss.hitDie}`}</HeaderBox>
         <HeaderBox header='Hit Points'>{hp}</HeaderBox>
       </View>
@@ -121,6 +144,15 @@ export default function Sheet({ char, onUpdate, openEditor }) {
           onPress={() => openEditor('skills')}
         >
           {allSkills.sort().join(', ')}
+        </TouchableTextBox>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableTextBox
+          placeholder='Languages'
+          onPress={() => openEditor('languages')}
+        >
+          {allLanguages.sort().join(', ')}
         </TouchableTextBox>
       </View>
     </View>
