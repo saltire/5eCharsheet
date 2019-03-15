@@ -99,6 +99,7 @@ export default class App extends Component {
         </View>
 
         <Sheet
+          key={char.id}
           char={char}
           onUpdate={this.updateChar}
           openEditor={modalName => this.setState({ modal: modalName })}

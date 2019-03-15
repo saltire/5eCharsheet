@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4';
+
 import classes from './data/classes';
 import races from './data/races';
 
@@ -210,6 +212,7 @@ export const xpLevels = [
 ];
 
 export const blankChar = () => ({
+  id: uuid(),
   name: '',
   level: 1,
   xp: 0,
