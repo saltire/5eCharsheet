@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { ProgressBarAndroid, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Ability from './Ability';
 import Dropdown from './Dropdown';
+import NumberInput from './NumberInput';
 import { HeaderBox, TouchableHeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
 
 import {
-  getRace, getClass, getAbilityBonuses, getHitPoints, getLanguages,
+  getRace, getClass, getAbilityBonuses, getHitPoints, getLanguages, getLevelProgress,
   getProficientSkills, getProficiencyBonus, getSpeed,
 } from './common/calc';
 import { abilities, backgrounds, classes, races } from './common/data';
@@ -41,6 +42,7 @@ export default function Sheet({ char, onUpdate, openEditor }) {
   const clss = getClass(char);
   const abilityBonuses = getAbilityBonuses(char);
   const hp = getHitPoints(char);
+  const levelProgress = getLevelProgress(char);
   const proficiency = getProficiencyBonus(char);
   const allSkills = (char.skills || []).concat(getProficientSkills(char));
   const allLanguages = (char.languages || []).concat(getLanguages(char));
@@ -48,6 +50,8 @@ export default function Sheet({ char, onUpdate, openEditor }) {
 
   return (
     <View style={styles.container}>
+      <ProgressBarAndroid styleAttr='Horizontal' indeterminate={false} progress={levelProgress} />
+
       <View style={styles.row}>
         <TextInput
           style={styles.input}
@@ -55,6 +59,14 @@ export default function Sheet({ char, onUpdate, openEditor }) {
           placeholderTextColor='#999'
           value={char.name}
           onChangeText={text => onUpdate({ name: text })}
+        />
+
+        <NumberInput
+          style={styles.input}
+          placeholder='XP'
+          placeholderTextColor='#999'
+          value={char.xp}
+          onChange={value => onUpdate({ xp: value })}
         />
 
         <TextBox>{char.level}</TextBox>

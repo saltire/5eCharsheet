@@ -1,4 +1,4 @@
-import { classes, races } from './data';
+import { classes, races, xpLevels } from './data';
 import { mod, sum } from './utils';
 
 
@@ -48,6 +48,12 @@ export function getLanguageChoices(char, raceData) {
   const subrace = getSubrace(char, race);
 
   return sum(race && race.languageChoices, subrace && subrace.languageChoices);
+}
+
+export function getLevelProgress(char) {
+  const currentLevelXP = xpLevels[char.level - 1];
+  const nextLevelXP = xpLevels[char.level];
+  return (char.xp - currentLevelXP) / (nextLevelXP - currentLevelXP);
 }
 
 export function getProficiencyBonus(char) {
