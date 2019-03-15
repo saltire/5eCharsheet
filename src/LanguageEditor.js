@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Text, View } from 'react-native';
 
 import Toggle from './Toggle';
 import { FlexButtonContainer, FlexButton } from './common/flexButtons';
@@ -26,6 +26,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  sectionHeader: {
+    paddingBottom: 5,
+    marginBottom: 3,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  sectionFooter: {
+    marginBottom: 15,
+  },
   row: {
     flexDirection: 'row',
     marginVertical: 1,
@@ -49,6 +60,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const sections = Array.from(new Set(languages.map(lang => lang.type)))
+  .map(type => ({
+    title: type,
+    data: languages.filter(lang => lang.type === type).map(lang => lang.label),
+  }));
+
 export default class SkillEditor extends Component {
   constructor(props) {
     super(props);
@@ -70,20 +87,20 @@ export default class SkillEditor extends Component {
     const allLanguages = chosenLanguages.concat(otherLanguages);
     const choicesRemaining = Math.max(0, languageChoices - chosenLanguages.length);
 
-    console.log({ chosenLanguages, otherLanguages, allLanguages, choicesRemaining });
-
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Languages</Text>
 
-        <FlatList
+        <SectionList
           style={styles.scrollContainer}
-          data={languages
-            .map(language => ({ label: language, value: allLanguages.includes(language) }))}
+          sections={sections}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text style={styles.sectionHeader}>{title}</Text>
+          )}
           renderItem={({ item: language }) => (
             <View style={styles.row}>
               <View style={[styles.cell, styles.expand]}>
-                <Text style={styles.languageName}>{language.label}</Text>
+                <Text style={styles.languageName}>{language}</Text>
               </View>
 
               <View style={styles.cell}>
@@ -91,16 +108,16 @@ export default class SkillEditor extends Component {
                   colorOn='#c00'
                   colorOff='#666'
                   trackColor='#ddd'
-                  value={language.value}
-                  disabled={otherLanguages.includes(language.label) ||
-                    (!chosenLanguages.includes(language.label) && !choicesRemaining)}
+                  value={allLanguages.includes(language)}
+                  disabled={otherLanguages.includes(language) ||
+                    (!chosenLanguages.includes(language) && !choicesRemaining)}
                   onChange={newValue => this.setState((prevState) => {
                     const newLanguages = new Set(prevState.chosenLanguages);
                     if (newValue) {
-                      newLanguages.add(language.label);
+                      newLanguages.add(language);
                     }
                     else {
-                      newLanguages.delete(language.label);
+                      newLanguages.delete(language);
                     }
                     return { chosenLanguages: Array.from(newLanguages).sort() };
                   })}
@@ -108,7 +125,8 @@ export default class SkillEditor extends Component {
               </View>
             </View>
           )}
-          keyExtractor={language => language.label}
+          renderSectionFooter={() => <View style={styles.sectionFooter} />}
+          keyExtractor={language => language}
         />
 
         <Text style={styles.help}>Choices remaining: {choicesRemaining}</Text>

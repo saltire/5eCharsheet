@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   },
   abilityHeaderRow: {
     flexDirection: 'row',
-    marginTop: 15,
     paddingBottom: 5,
     marginBottom: 3,
     borderBottomColor: 'black',
@@ -47,6 +46,9 @@ const styles = StyleSheet.create({
   abilityMod: {
     fontSize: 20,
     textAlign: 'right',
+  },
+  abilityFooter: {
+    marginBottom: 15,
   },
   cell: {
     justifyContent: 'center',
@@ -161,7 +163,8 @@ export default class SkillEditor extends Component {
               </View>
             </View>
           )}
-          keyExtractor={item => item.label}
+          renderSectionFooter={() => <View style={styles.abilityFooter} />}
+          keyExtractor={skill => skill.label}
         />
 
         <Text style={styles.help}>

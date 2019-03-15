@@ -45,22 +45,70 @@ export const backgrounds = [
 ];
 
 export const languages = [
-  'Common',
-  'Dwarvish',
-  'Elvish',
-  'Giant',
-  'Gnomish',
-  'Goblin',
-  'Halfling',
-  'Orc',
-  'Abyssal',
-  'Celestial',
-  'Draconic',
-  'Deep Speech',
-  'Infernal',
-  'Primordial',
-  'Sylvan',
-  'Undercommon',
+  {
+    label: 'Common',
+    type: 'Standard',
+  },
+  {
+    label: 'Dwarvish',
+    type: 'Standard',
+  },
+  {
+    label: 'Elvish',
+    type: 'Standard',
+  },
+  {
+    label: 'Giant',
+    type: 'Standard',
+  },
+  {
+    label: 'Gnomish',
+    type: 'Standard',
+  },
+  {
+    label: 'Goblin',
+    type: 'Standard',
+  },
+  {
+    label: 'Halfling',
+    type: 'Standard',
+  },
+  {
+    label: 'Orc',
+    type: 'Standard',
+  },
+  {
+    label: 'Abyssal',
+    type: 'Exotic',
+  },
+  {
+    label: 'Celestial',
+    type: 'Exotic',
+  },
+  {
+    label: 'Draconic',
+    type: 'Exotic',
+  },
+  {
+    label: 'Deep Speech',
+    type: 'Exotic',
+  },
+  {
+    label: 'Infernal',
+    type: 'Exotic',
+  },
+  {
+    label: 'Primordial',
+    type: 'Exotic',
+  },
+  {
+    label: 'Sylvan',
+    type: 'Exotic',
+  },
+  {
+    label: 'Undercommon',
+    type: 'Exotic',
+  },
 ];
 
 export const skills = [
