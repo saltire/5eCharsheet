@@ -5,21 +5,10 @@ import { alignments } from '../common/data';
 
 
 const styles = StyleSheet.create({
-  container: {
-    alignSelf: 'center',
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: 'white',
-    elevation: 10,
-    shadowColor: 'black',
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-  },
-  header: {
-    marginBottom: 10,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  grid: {
+    alignItems: 'center',
+    marginHorizontal: 15,
+    marginVertical: 5,
   },
   row: {
     flexDirection: 'row',
@@ -48,24 +37,24 @@ export default function AlignmentEditor({ char, onAccept }) {
   const { alignment } = char;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Alignment</Text>
-
-      {Object.entries(rows).map(([key, cells]) => (
-        <View key={key} style={styles.row}>
-          {cells.map(value => (
-            <TouchableOpacity
-              key={value}
-              activeOpacity={0.8}
-              onPress={() => onAccept({ alignment: value })}
-            >
-              <View style={styles.cell}>
-                <Text style={value === alignment ? styles.selected : []}>{value}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      ))}
-    </View>
+    <>
+      <View style={styles.grid}>
+        {Object.entries(rows).map(([key, cells]) => (
+          <View key={key} style={styles.row}>
+            {cells.map(value => (
+              <TouchableOpacity
+                key={value}
+                activeOpacity={0.8}
+                onPress={() => onAccept({ alignment: value })}
+              >
+                <View style={styles.cell}>
+                  <Text style={value === alignment ? styles.selected : []}>{value}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ))}
+      </View>
+    </>
   );
 }

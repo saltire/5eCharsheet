@@ -9,23 +9,9 @@ import { mod, signed } from '../common/utils';
 
 
 const styles = StyleSheet.create({
-  container: {
-    height: 600,
-    borderRadius: 5,
-    backgroundColor: 'white',
-    elevation: 10,
-    shadowColor: 'black',
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-  },
   scrollContainer: {
+    marginVertical: 10,
     paddingHorizontal: 20,
-  },
-  header: {
-    marginVertical: 20,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   abilityHeaderRow: {
     flexDirection: 'row',
@@ -70,12 +56,11 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   help: {
-    marginVertical: 10,
     textAlign: 'center',
   },
   flexButtons: {
     marginHorizontal: 20,
-    marginBottom: 20,
+    marginVertical: 10,
   },
 });
 
@@ -111,9 +96,7 @@ export default class SkillEditor extends Component {
     const choicesRemaining = Math.max(0, skillChoices - chosenSkills.length);
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Skills</Text>
-
+      <>
         <SectionList
           style={styles.scrollContainer}
           sections={sections}
@@ -180,7 +163,7 @@ export default class SkillEditor extends Component {
             ]}
           />
         </View>
-      </View>
+      </>
     );
   }
 }

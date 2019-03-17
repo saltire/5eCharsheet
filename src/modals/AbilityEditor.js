@@ -9,23 +9,9 @@ import { mod, roll, signed } from '../common/utils';
 
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    backgroundColor: 'white',
-    elevation: 10,
-    shadowColor: 'black',
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-  },
-  header: {
-    marginVertical: 10,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
   columns: {
+    marginHorizontal: 20,
+    marginVertical: 10,
     flexDirection: 'row',
   },
   rowText: {
@@ -63,10 +49,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   help: {
-    marginTop: 5,
     textAlign: 'center',
   },
   flexButtons: {
+    marginHorizontal: 20,
     marginVertical: 10,
   },
 });
@@ -108,9 +94,7 @@ export default class AbilityEditor extends Component {
     const complete = Object.values(abilities).every(Boolean);
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Ability Scores</Text>
-
+      <>
         <View style={styles.flexButtons}>
           <FlexButtons
             buttons={[
@@ -181,7 +165,7 @@ export default class AbilityEditor extends Component {
             ]}
           />
         </View>
-      </View>
+      </>
     );
   }
 }

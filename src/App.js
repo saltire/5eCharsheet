@@ -107,14 +107,14 @@ export default class App extends Component {
           openEditor={modalName => this.setState({ modal: modalName })}
         />
 
-        <ModalContainer visible={modal === 'alignment'} close={this.closeModal}>
+        <ModalContainer visible={modal === 'alignment'} title='Alignment' close={this.closeModal}>
           <AlignmentEditor
             char={char}
             onAccept={this.updateAndClose}
           />
         </ModalContainer>
 
-        <ModalContainer visible={modal === 'abilities'} close={this.closeModal}>
+        <ModalContainer visible={modal === 'abilities'} title='Ability Scores' close={this.closeModal}>
           <AbilityEditor
             char={char}
             onAccept={this.updateAndClose}
@@ -122,7 +122,7 @@ export default class App extends Component {
           />
         </ModalContainer>
 
-        <ModalContainer visible={modal === 'languages'} close={this.closeModal}>
+        <ModalContainer visible={modal === 'languages'} title='Languages' close={this.closeModal}>
           <LanguageEditor
             char={char}
             onAccept={this.updateAndClose}
@@ -130,7 +130,7 @@ export default class App extends Component {
           />
         </ModalContainer>
 
-        <ModalContainer visible={modal === 'skills'} close={this.closeModal}>
+        <ModalContainer visible={modal === 'skills'} title='Skills' close={this.closeModal}>
           <SkillEditor
             char={char}
             onAccept={this.updateAndClose}
