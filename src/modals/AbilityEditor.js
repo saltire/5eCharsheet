@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
-import { FlexButtonContainer, FlexButton } from '../common/flexButtons';
+import FlexButtons from '../common/FlexButtons';
 import { getAbilityBonuses } from '../common/calc';
 import { abilities as abilityNames } from '../common/data';
 import { mod, roll, signed } from '../common/utils';
@@ -112,10 +112,12 @@ export default class AbilityEditor extends Component {
         <Text style={styles.header}>Ability Scores</Text>
 
         <View style={styles.flexButtons}>
-          <FlexButtonContainer>
-            <FlexButton title='Simple' onPress={this.useSimpleScores} />
-            <FlexButton title='Roll' onPress={this.rollScores} />
-          </FlexButtonContainer>
+          <FlexButtons
+            buttons={[
+              { title: 'Simple', onPress: this.useSimpleScores },
+              { title: 'Roll', onPress: this.rollScores },
+            ]}
+          />
         </View>
 
         <View style={styles.columns}>
@@ -172,10 +174,12 @@ export default class AbilityEditor extends Component {
         </Text>
 
         <View style={styles.flexButtons}>
-          <FlexButtonContainer>
-            <FlexButton title='OK' onPress={() => onAccept({ abilities })} />
-            <FlexButton title='Cancel' onPress={onCancel} />
-          </FlexButtonContainer>
+          <FlexButtons
+            buttons={[
+              { title: 'OK', onPress: () => onAccept({ abilities }) },
+              { title: 'Cancel', onPress: onCancel },
+            ]}
+          />
         </View>
       </View>
     );

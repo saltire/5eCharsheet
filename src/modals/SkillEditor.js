@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 
+import FlexButtons from '../common/FlexButtons';
 import Toggle from '../common/Toggle';
-import { FlexButtonContainer, FlexButton } from '../common/flexButtons';
 import { getClass, getProficiencyBonus, getProficientSkills, getSkillChoices } from '../common/calc';
 import { abilities, skills } from '../common/data';
 import { mod, signed } from '../common/utils';
@@ -173,10 +173,12 @@ export default class SkillEditor extends Component {
         </Text>
 
         <View style={styles.flexButtons}>
-          <FlexButtonContainer>
-            <FlexButton title='OK' onPress={() => onAccept({ skills: chosenSkills })} />
-            <FlexButton title='Cancel' onPress={onCancel} />
-          </FlexButtonContainer>
+          <FlexButtons
+            buttons={[
+              { title: 'OK', onPress: () => onAccept({ skills: chosenSkills }) },
+              { title: 'Cancel', onPress: onCancel },
+            ]}
+          />
         </View>
       </View>
     );

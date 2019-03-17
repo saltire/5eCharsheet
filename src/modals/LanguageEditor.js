@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 
+import FlexButtons from '../common/FlexButtons';
 import Toggle from '../common/Toggle';
-import { FlexButtonContainer, FlexButton } from '../common/flexButtons';
 import { getLanguages, getLanguageChoices } from '../common/calc';
 import { languages } from '../common/data';
 
@@ -132,10 +132,12 @@ export default class SkillEditor extends Component {
         <Text style={styles.help}>Choices remaining: {choicesRemaining}</Text>
 
         <View style={styles.flexButtons}>
-          <FlexButtonContainer>
-            <FlexButton title='OK' onPress={() => onAccept({ languages: chosenLanguages })} />
-            <FlexButton title='Cancel' onPress={onCancel} />
-          </FlexButtonContainer>
+          <FlexButtons
+            buttons={[
+              { title: 'OK', onPress: () => onAccept({ languages: chosenLanguages }) },
+              { title: 'Cancel', onPress: onCancel },
+            ]}
+          />
         </View>
       </View>
     );

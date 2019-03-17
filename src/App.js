@@ -3,11 +3,11 @@ import { AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
 
 import AbilityEditor from './modals/AbilityEditor';
 import AlignmentEditor from './modals/AlignmentEditor';
+import FlexButtons from './common/FlexButtons';
 import LanguageEditor from './modals/LanguageEditor';
 import ModalContainer from './ModalContainer';
 import SkillEditor from './modals/SkillEditor';
 import Sheet from './Sheet';
-import { FlexButtonContainer, FlexButton } from './common/flexButtons';
 
 import { blankChar } from './common/data';
 
@@ -91,11 +91,13 @@ export default class App extends Component {
     return (
       <View style={[styles.main, { paddingTop: StatusBar.currentHeight }]}>
         <View style={styles.buttons}>
-          <FlexButtonContainer>
-            {/* <FlexButton title='Load' onPress={this.loadCharacter} /> */}
-            {/* <FlexButton title='Save' onPress={this.saveCharacter} /> */}
-            <FlexButton title='Clear' onPress={this.clearCharacter} />
-          </FlexButtonContainer>
+          <FlexButtons
+            buttons={[
+              // { title: 'Load', onPress: this.loadCharacter },
+              // { title: 'Save', onPress: this.saveCharacter },
+              { title: 'Clear', onPress: this.clearCharacter },
+            ]}
+          />
         </View>
 
         <Sheet
