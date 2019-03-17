@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 
-import Toggle from './Toggle';
-import { FlexButtonContainer, FlexButton } from './common/flexButtons';
-import { getClass, getProficiencyBonus, getProficientSkills, getSkillChoices } from './common/calc';
-import { abilities, skills } from './common/data';
-import { mod, signed } from './common/utils';
+import Toggle from '../common/Toggle';
+import { FlexButtonContainer, FlexButton } from '../common/flexButtons';
+import { getClass, getProficiencyBonus, getProficientSkills, getSkillChoices } from '../common/calc';
+import { abilities, skills } from '../common/data';
+import { mod, signed } from '../common/utils';
 
 
 const styles = StyleSheet.create({

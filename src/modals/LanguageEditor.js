@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 
-import Toggle from './Toggle';
-import { FlexButtonContainer, FlexButton } from './common/flexButtons';
-import { getLanguages, getLanguageChoices } from './common/calc';
-import { languages } from './common/data';
+import Toggle from '../common/Toggle';
+import { FlexButtonContainer, FlexButton } from '../common/flexButtons';
+import { getLanguages, getLanguageChoices } from '../common/calc';
+import { languages } from '../common/data';
 
 
 const styles = StyleSheet.create({

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
 
-import AbilityEditor from './AbilityEditor';
-import AlignmentEditor from './AlignmentEditor';
-import LanguageEditor from './LanguageEditor';
+import AbilityEditor from './modals/AbilityEditor';
+import AlignmentEditor from './modals/AlignmentEditor';
+import LanguageEditor from './modals/LanguageEditor';
 import ModalContainer from './ModalContainer';
-import SkillEditor from './SkillEditor';
+import SkillEditor from './modals/SkillEditor';
 import Sheet from './Sheet';
 import { FlexButtonContainer, FlexButton } from './common/flexButtons';
 

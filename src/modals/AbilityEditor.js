@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
-import { FlexButtonContainer, FlexButton } from './common/flexButtons';
-import { getAbilityBonuses } from './common/calc';
-import { abilities as abilityNames } from './common/data';
-import { mod, roll, signed } from './common/utils';
+import { FlexButtonContainer, FlexButton } from '../common/flexButtons';
+import { getAbilityBonuses } from '../common/calc';
+import { abilities as abilityNames } from '../common/data';
+import { mod, roll, signed } from '../common/utils';
 
 
 const styles = StyleSheet.create({

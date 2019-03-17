@@ -2,8 +2,8 @@ import React from 'react';
 import { ProgressBarAndroid, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Ability from './Ability';
-import Dropdown from './Dropdown';
-import NumberInput from './NumberInput';
+import Dropdown from './common/Dropdown';
+import NumberInput from './common/NumberInput';
 import { HeaderBox, TouchableHeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
 
 import {
