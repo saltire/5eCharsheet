@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
+import { AsyncStorage, Modal, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import AbilityEditor from './modals/AbilityEditor';
 import AlignmentEditor from './modals/AlignmentEditor';
 import FlexButtons from './common/FlexButtons';
 import LanguageEditor from './modals/LanguageEditor';
-import ModalContainer from './ModalContainer';
 import SkillEditor from './modals/SkillEditor';
 import Sheet from './Sheet';
 
@@ -21,7 +20,54 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 10,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 50,
+    backgroundColor: 'rgba(0, 0, 0, .5)',
+  },
+  modal: {
+    maxHeight: 600,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    elevation: 10,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+  },
+  narrowModal: {
+    alignSelf: 'center',
+  },
+  modalHeader: {
+    marginVertical: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
+
+const modals = {
+  abilities: {
+    title: 'Ability Scores',
+    component: AbilityEditor,
+  },
+  alignment: {
+    title: 'Alignment',
+    component: AlignmentEditor,
+    narrow: true,
+  },
+  languages: {
+    title: 'Languages',
+    component: LanguageEditor,
+  },
+  skills: {
+    title: 'Skills',
+    component: SkillEditor,
+  },
+};
 
 export default class App extends Component {
   constructor(props) {
@@ -107,36 +153,27 @@ export default class App extends Component {
           openEditor={modalName => this.setState({ modal: modalName })}
         />
 
-        <ModalContainer visible={modal === 'alignment'} title='Alignment' close={this.closeModal}>
-          <AlignmentEditor
-            char={char}
-            onAccept={this.updateAndClose}
-          />
-        </ModalContainer>
+        {Object.entries(modals).map(([id, { title, component: ModalComponent, narrow }]) => (
+          <Modal
+            key={id}
+            visible={modal === id}
+            transparent
+            animationType='fade'
+            onRequestClose={this.closeModal}
+          >
+            <View style={styles.modalContainer}>
+              <View style={[styles.modal, !!narrow && styles.narrowModal]}>
+                <Text style={styles.modalHeader}>{title}</Text>
 
-        <ModalContainer visible={modal === 'abilities'} title='Ability Scores' close={this.closeModal}>
-          <AbilityEditor
-            char={char}
-            onAccept={this.updateAndClose}
-            onCancel={this.closeModal}
-          />
-        </ModalContainer>
-
-        <ModalContainer visible={modal === 'languages'} title='Languages' close={this.closeModal}>
-          <LanguageEditor
-            char={char}
-            onAccept={this.updateAndClose}
-            onCancel={this.closeModal}
-          />
-        </ModalContainer>
-
-        <ModalContainer visible={modal === 'skills'} title='Skills' close={this.closeModal}>
-          <SkillEditor
-            char={char}
-            onAccept={this.updateAndClose}
-            onCancel={this.closeModal}
-          />
-        </ModalContainer>
+                <ModalComponent
+                  char={char}
+                  onAccept={this.updateAndClose}
+                  onCancel={this.closeModal}
+                />
+              </View>
+            </View>
+          </Modal>
+        ))}
       </View>
     );
   }
