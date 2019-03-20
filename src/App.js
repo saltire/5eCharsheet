@@ -3,11 +3,11 @@ import { AsyncStorage, Modal, StatusBar, StyleSheet, Text, View } from 'react-na
 
 import AbilityEditor from './modals/AbilityEditor';
 import AlignmentEditor from './modals/AlignmentEditor';
+import ExperienceEditor from './modals/ExperienceEditor';
 import FlexButtons from './common/FlexButtons';
 import LanguageEditor from './modals/LanguageEditor';
 import SkillEditor from './modals/SkillEditor';
 import Sheet from './Sheet';
-
 import { blankChar } from './common/data';
 
 
@@ -66,6 +66,10 @@ const modals = {
   skills: {
     title: 'Skills',
     component: SkillEditor,
+  },
+  xp: {
+    title: 'Experience',
+    component: ExperienceEditor,
   },
 };
 

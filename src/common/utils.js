@@ -17,3 +17,7 @@ export function roll(num, sides, highest) {
     .reverse()
     .slice(0, highest || num));
 }
+
+export function commas(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

@@ -3,7 +3,6 @@ import { ProgressBarAndroid, StyleSheet, TextInput, TouchableOpacity, View } fro
 
 import Ability from './Ability';
 import Dropdown from './common/Dropdown';
-import NumberInput from './common/NumberInput';
 import { HeaderBox, TouchableHeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
 
 import {
@@ -11,7 +10,7 @@ import {
   getProficientSkills, getProficiencyBonus, getSpeed,
 } from './common/calc';
 import { abilities, backgrounds, classes, races } from './common/data';
-import { mod } from './common/utils';
+import { mod, commas } from './common/utils';
 
 
 const styles = StyleSheet.create({
@@ -50,7 +49,12 @@ export default function Sheet({ char, onUpdate, openEditor }) {
 
   return (
     <View style={styles.container}>
-      <ProgressBarAndroid styleAttr='Horizontal' indeterminate={false} progress={levelProgress} />
+      <ProgressBarAndroid
+        styleAttr='Horizontal'
+        color={levelProgress >= 1 ? '#cc0' : '#c00'}
+        indeterminate={false}
+        progress={levelProgress}
+      />
 
       <View style={styles.row}>
         <TextInput
@@ -61,13 +65,12 @@ export default function Sheet({ char, onUpdate, openEditor }) {
           onChangeText={text => onUpdate({ name: text })}
         />
 
-        <NumberInput
-          style={styles.input}
+        <TouchableTextBox
           placeholder='XP'
-          placeholderTextColor='#999'
-          value={char.xp}
-          onChange={value => onUpdate({ xp: value })}
-        />
+          onPress={() => openEditor('xp')}
+        >
+          {commas(char.xp)}
+        </TouchableTextBox>
 
         <TextBox>{char.level}</TextBox>
       </View>
