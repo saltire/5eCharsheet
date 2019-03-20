@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Slider, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Slider, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import ButtonGroup from '../common/ButtonGroup';
 import FlexButtons from '../common/FlexButtons';
@@ -25,12 +25,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   form: {
-    marginVertical: 15,
-  },
-  formRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingTop: 20,
+    marginVertical: 15,
   },
   formField: {
     width: 80,
@@ -42,7 +39,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   slider: {
-    height: 20,
+    flex: 1,
+    height: 32,
     marginHorizontal: 20,
   },
 });
@@ -52,22 +50,32 @@ export default class ExperienceEditor extends Component {
     super(props);
 
     this.state = {
-      xp: normalize(props.char.xp),
       tab: 'Add XP',
-      addValue: '',
-      setValue: '',
-      setLevel: 1,
+      value: '',
+      level: 1,
     };
   }
 
-  setXP(value) {
-    const xp = normalize(value);
-    this.setState({ xp, addValue: '', setValue: '' });
-  }
-
   render() {
-    const { onAccept, onCancel } = this.props;
-    const { xp, tab, addValue, setValue, setLevel } = this.state;
+    const { char, onAccept, onCancel } = this.props;
+    const { tab, value, level } = this.state;
+
+    const acceptButtons = {
+      'Add XP': {
+        title: 'Add',
+        disabled: !normalize(value),
+        onPress: () => onAccept({ xp: char.xp + normalize(value) }),
+      },
+      'Set XP': {
+        title: 'Set',
+        disabled: !normalize(value),
+        onPress: () => onAccept({ xp: normalize(value) }),
+      },
+      'Set at Level': {
+        title: `Set at Level ${level}`,
+        onPress: () => onAccept({ xp: xpLevels[level - 1] }),
+      },
+    };
 
     return (
       <>
@@ -80,45 +88,19 @@ export default class ExperienceEditor extends Component {
         </View>
 
         <Text style={styles.current}>
-          Current XP: <Text style={styles.value}>{commas(xp)}</Text>
+          Current XP: <Text style={styles.value}>{commas(char.xp)}</Text>
         </Text>
 
-        {tab === 'Add XP' && (
-          <View style={[styles.form, styles.formRow]}>
+        <View style={styles.form}>
+          {tab !== 'Set at Level' ? (
             <TextInput
               style={styles.formField}
-              value={`${addValue}`}
+              value={`${value}`}
               keyboardType='numeric'
-              onChangeText={text => this.setState({ addValue: text })}
-              onEndEditing={() => this.setState({ addValue: normalize(addValue) })}
+              onChangeText={text => this.setState({ value: text })}
+              onEndEditing={() => this.setState({ value: normalize(value) })}
             />
-            <Button
-              title='Add'
-              disabled={addValue === ''}
-              onPress={() => this.setXP(xp + normalize(addValue))}
-            />
-          </View>
-        )}
-
-        {tab === 'Set XP' && (
-          <View style={[styles.form, styles.formRow]}>
-            <TextInput
-              style={styles.formField}
-              value={`${setValue}`}
-              keyboardType='numeric'
-              onChangeText={text => this.setState({ setValue: text })}
-              onEndEditing={() => this.setState({ setValue: normalize(setValue) })}
-            />
-            <Button
-              title='Set'
-              disabled={setValue === ''}
-              onPress={() => this.setXP(normalize(setValue))}
-            />
-          </View>
-        )}
-
-        {tab === 'Set at Level' && (
-          <View style={styles.form}>
+          ) : (
             <Slider
               style={styles.slider}
               minimumValue={1}
@@ -127,22 +109,16 @@ export default class ExperienceEditor extends Component {
               maximumTrackTintColor='#ddd'
               thumbTintColor='#c00'
               step={1}
-              value={Number(setLevel)}
-              onValueChange={val => this.setState({ setLevel: val })}
+              value={Number(level)}
+              onValueChange={val => this.setState({ level: val })}
             />
-            <View style={{ alignSelf: 'center' }}>
-              <Button
-                title={`Set at level ${setLevel}`}
-                onPress={() => this.setXP(xpLevels[setLevel - 1])}
-              />
-            </View>
-          </View>
-        )}
+          )}
+        </View>
 
         <View style={styles.flexButtons}>
           <FlexButtons
             buttons={[
-              { title: 'OK', onPress: () => onAccept({ xp }) },
+              acceptButtons[tab],
               { title: 'Cancel', onPress: onCancel },
             ]}
           />

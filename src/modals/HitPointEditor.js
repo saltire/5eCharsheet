@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import ButtonGroup from '../common/ButtonGroup';
 import FlexButtons from '../common/FlexButtons';
@@ -24,11 +24,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   form: {
-    marginVertical: 15,
-  },
-  formRow: {
     flexDirection: 'row',
     justifyContent: 'center',
+    height: 32,
+    marginVertical: 15,
   },
   formField: {
     width: 80,
@@ -46,7 +45,6 @@ export default class HitPointEditor extends Component {
     super(props);
 
     this.state = {
-      charHP: props.char.hp,
       tab: 'Damage',
       value: '',
     };
@@ -54,9 +52,26 @@ export default class HitPointEditor extends Component {
 
   render() {
     const { char, onAccept, onCancel } = this.props;
-    const { charHP, tab, value } = this.state;
+    const { tab, value } = this.state;
     const maxHP = getMaxHitPoints(char);
-    const hp = charHP === undefined ? maxHP : charHP;
+    const hp = char.hp === undefined ? maxHP : char.hp;
+
+    const acceptButtons = {
+      Damage: {
+        title: 'Apply Damage',
+        disabled: !normalize(value),
+        onPress: () => onAccept({ hp: hp - normalize(value) }),
+      },
+      Heal: {
+        title: 'Heal',
+        disabled: !normalize(value),
+        onPress: () => {
+          const healedHP = hp + normalize(value);
+          onAccept({ hp: healedHP < maxHP ? healedHP : undefined });
+        },
+      },
+      Reset: { title: 'Reset to Max', onPress: () => onAccept({ hp: undefined }) },
+    };
 
     return (
       <>
@@ -69,11 +84,14 @@ export default class HitPointEditor extends Component {
         </View>
 
         <Text style={styles.current}>
-          Current Hit Points: <Text style={styles.value}>{hp === undefined ? maxHP : hp}</Text>
+          <Text>Current Hit Points: </Text>
+          <Text style={styles.value}>{hp}</Text>
+          <Text> / </Text>
+          <Text style={styles.value}>{maxHP}</Text>
         </Text>
 
-        {tab === 'Damage' && (
-          <View style={[styles.form, styles.formRow]}>
+        <View style={styles.form}>
+          {tab !== 'Reset' && (
             <TextInput
               style={styles.formField}
               value={`${value}`}
@@ -81,47 +99,13 @@ export default class HitPointEditor extends Component {
               onChangeText={text => this.setState({ value: text })}
               onEndEditing={() => this.setState({ value: normalize(value) })}
             />
-            <Button
-              title='Apply Damage'
-              disabled={value === ''}
-              onPress={() => this.setState({ charHP: hp - normalize(value), value: '' })}
-            />
-          </View>
-        )}
-
-        {tab === 'Heal' && (
-          <View style={[styles.form, styles.formRow]}>
-            <TextInput
-              style={styles.formField}
-              value={`${value}`}
-              keyboardType='numeric'
-              onChangeText={text => this.setState({ value: text })}
-              onEndEditing={() => this.setState({ value: normalize(value) })}
-            />
-            <Button
-              title='Heal'
-              disabled={value === ''}
-              onPress={() => this.setState({
-                charHP: Math.min(maxHP, hp + normalize(value)),
-                value: '',
-              })}
-            />
-          </View>
-        )}
-
-        {tab === 'Reset' && (
-          <View style={[styles.form, styles.formRow]}>
-            <Button
-              title='Reset to Max'
-              onPress={() => this.setState({ charHP: undefined })}
-            />
-          </View>
-        )}
+          )}
+        </View>
 
         <View style={styles.flexButtons}>
           <FlexButtons
             buttons={[
-              { title: 'OK', onPress: () => onAccept({ hp: charHP }) },
+              acceptButtons[tab],
               { title: 'Cancel', onPress: onCancel },
             ]}
           />
