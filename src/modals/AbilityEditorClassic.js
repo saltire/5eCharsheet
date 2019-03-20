@@ -34,7 +34,7 @@ export default class AbilityEditorClassic extends Component {
 
     return (
       <>
-        <View style={styles.flexButtons}>
+        <View style={styles.topBar}>
           <FlexButtons
             buttons={[
               { title: 'Simple', onPress: this.useSimpleScores },
@@ -43,10 +43,12 @@ export default class AbilityEditorClassic extends Component {
           />
         </View>
 
-        <View style={styles.columns}>
+        <View style={[styles.container, styles.columns]}>
           <View style={styles.expand}>
             {Object.keys(abilities).map(name => (
-              <Text key={name} style={styles.rowText}>{name}</Text>
+              <View key={name} style={styles.row}>
+                <Text style={styles.rowText}>{name}</Text>
+              </View>
             ))}
           </View>
 
@@ -60,7 +62,9 @@ export default class AbilityEditorClassic extends Component {
                   onPressIn={move}
                   onPressOut={moveEnd}
                 >
-                  <Text style={[styles.scoreButton, { opacity: item ? 1 : 0 }]}>{item}</Text>
+                  <Text style={[styles.score, styles.scoreButton, { opacity: item ? 1 : 0 }]}>
+                    {item}
+                  </Text>
                 </TouchableOpacity>
               )}
               onMoveEnd={({ data }) => this.setScores(data)}
@@ -68,26 +72,20 @@ export default class AbilityEditorClassic extends Component {
           </View>
 
           <View>
-            {Object.keys(abilities).map(ability => (
-              <Text key={ability} style={[styles.rowText, styles.mod]}>
-                {signed(bonuses[ability])}
-              </Text>
-            ))}
-          </View>
-
-          <View>
             {Object.entries(abilities).map(([ability, score]) => (
-              <Text key={ability} style={styles.score}>
-                {score && (score + (bonuses[ability] || 0))}
-              </Text>
-            ))}
-          </View>
+              <View key={ability} style={styles.row}>
+                <Text style={[styles.rowText, styles.mod]}>
+                  {signed(bonuses[ability])}
+                </Text>
 
-          <View>
-            {Object.entries(abilities).map(([ability, score]) => (
-              <Text key={ability} style={[styles.rowText, styles.mod, styles.bold]}>
-                {score ? signed(mod(score + (bonuses[ability] || 0))) : '–'}
-              </Text>
+                <Text style={[styles.score, styles.bold]}>
+                  {score && (score + (bonuses[ability] || 0))}
+                </Text>
+
+                <Text style={[styles.rowText, styles.mod, styles.bold]}>
+                  {score ? signed(mod(score + (bonuses[ability] || 0))) : '–'}
+                </Text>
+              </View>
             ))}
           </View>
         </View>
