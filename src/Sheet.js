@@ -6,7 +6,7 @@ import Dropdown from './common/Dropdown';
 import { HeaderBox, TouchableHeaderBox, TextBox, TouchableTextBox } from './common/textBoxes';
 
 import {
-  getRace, getClass, getAbilityBonuses, getHitPoints, getLanguages, getLevelProgress,
+  getRace, getClass, getAbilityBonuses, getLanguages, getLevelProgress, getMaxHitPoints,
   getProficientSkills, getProficiencyBonus, getSpeed,
 } from './common/calc';
 import { abilities, backgrounds, classes, races } from './common/data';
@@ -40,12 +40,13 @@ export default function Sheet({ char, onUpdate, openEditor }) {
   const race = getRace(char);
   const clss = getClass(char);
   const abilityBonuses = getAbilityBonuses(char);
-  const hp = getHitPoints(char);
+  const maxHP = getMaxHitPoints(char);
   const levelProgress = getLevelProgress(char);
   const proficiency = getProficiencyBonus(char);
   const allSkills = (char.skills || []).concat(getProficientSkills(char));
   const allLanguages = (char.languages || []).concat(getLanguages(char));
   const speed = getSpeed(char, race);
+  const hp = char.hp === undefined ? maxHP : char.hp;
 
   return (
     <View style={styles.container}>
@@ -150,7 +151,13 @@ export default function Sheet({ char, onUpdate, openEditor }) {
 
       <View style={styles.row}>
         <HeaderBox header='Hit Dice'>{clss && `${char.level}d${clss.hitDie}`}</HeaderBox>
-        <HeaderBox header='Hit Points'>{hp}</HeaderBox>
+        <TouchableHeaderBox
+          header='Hit Points'
+          disabled={!maxHP}
+          onPress={() => openEditor('hp')}
+        >
+          {hp}
+        </TouchableHeaderBox>
       </View>
 
       <View style={styles.row}>

@@ -224,4 +224,5 @@ export const blankChar = () => ({
   abilities: abilities.reduce((abs, name) => Object.assign(abs, { [name]: null }), {}),
   skills: [],
   languages: [],
+  hp: undefined,
 });

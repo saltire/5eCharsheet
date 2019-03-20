@@ -26,13 +26,6 @@ export function getAbilityBonuses(char, raceData) {
   return bonuses;
 }
 
-export function getHitPoints(char, classData) {
-  const clss = classData || getClass(char);
-
-  const con = char.abilities.Constitution;
-  return clss && con && (clss.hitDie + mod(con));
-}
-
 export function getLanguages(char, raceData) {
   const race = raceData || getRace(char);
   const subrace = getSubrace(char, race);
@@ -54,6 +47,13 @@ export function getLevelProgress(char) {
   const currentLevelXP = xpLevels[char.level - 1];
   const nextLevelXP = xpLevels[char.level];
   return (char.xp - currentLevelXP) / (nextLevelXP - currentLevelXP);
+}
+
+export function getMaxHitPoints(char, classData) {
+  const clss = classData || getClass(char);
+
+  const con = char.abilities.Constitution;
+  return clss && con && (clss.hitDie + mod(con));
 }
 
 export function getProficiencyBonus(char) {

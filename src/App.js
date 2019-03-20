@@ -5,6 +5,7 @@ import AbilityEditor from './modals/AbilityEditor';
 import AlignmentEditor from './modals/AlignmentEditor';
 import ExperienceEditor from './modals/ExperienceEditor';
 import FlexButtons from './common/FlexButtons';
+import HitPointEditor from './modals/HitPointEditor';
 import LanguageEditor from './modals/LanguageEditor';
 import SkillEditor from './modals/SkillEditor';
 import Sheet from './Sheet';
@@ -58,6 +59,10 @@ const modals = {
     title: 'Alignment',
     component: AlignmentEditor,
     narrow: true,
+  },
+  hp: {
+    title: 'Hit Points',
+    component: HitPointEditor,
   },
   languages: {
     title: 'Languages',

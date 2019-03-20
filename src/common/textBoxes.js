@@ -25,10 +25,11 @@ export const TextBox = ({ ...props }) => (
   </View>
 );
 
-export const TouchableTextBox = ({ onPress, ...props }) => (
+export const TouchableTextBox = ({ disabled, onPress, ...props }) => (
   <TouchableOpacity
     style={styles.textBox}
     activeOpacity={0.8}
+    disabled={disabled}
     onPress={onPress}
   >
     <TextContent {...props} />
@@ -42,10 +43,11 @@ export const HeaderBox = ({ header, placeholder, children }) => (
   </View>
 );
 
-export const TouchableHeaderBox = ({ header, placeholder, children, onPress }) => (
+export const TouchableHeaderBox = ({ header, placeholder, disabled, children, onPress }) => (
   <TouchableOpacity
     style={{ flex: 1, marginHorizontal: 5 }}
     activeOpacity={0.8}
+    disabled={disabled}
     onPress={onPress}
   >
     <View style={{ paddingHorizontal: 10, backgroundColor: '#fff' }}>
