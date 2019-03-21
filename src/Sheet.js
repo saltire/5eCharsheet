@@ -106,7 +106,7 @@ export default function Sheet({ char, onUpdate, openEditor }) {
       <View style={styles.row}>
         <Dropdown
           title='Background'
-          values={backgrounds}
+          values={backgrounds.map(b => b.label)}
           value={char.background}
           onChange={value => onUpdate({ background: value })}
         />

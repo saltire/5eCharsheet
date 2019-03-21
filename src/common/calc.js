@@ -1,4 +1,4 @@
-import { classes, races, xpLevels } from './data';
+import { backgrounds, classes, races, xpLevels } from './data';
 import { mod, sum } from './utils';
 
 
@@ -13,6 +13,10 @@ export function getSubrace(char, raceData) {
 
 export function getClass(char) {
   return classes.find(c => c.label === char.class);
+}
+
+export function getBackground(char) {
+  return backgrounds.find(b => b.label === char.background);
 }
 
 export function getAbilityBonuses(char, raceData) {
@@ -36,11 +40,16 @@ export function getLanguages(char, raceData) {
   ]));
 }
 
-export function getLanguageChoices(char, raceData) {
+export function getLanguageChoices(char, raceData, backgroundData) {
   const race = raceData || getRace(char);
   const subrace = getSubrace(char, race);
+  const background = backgroundData || getBackground(char);
 
-  return sum(race && race.languageChoices, subrace && subrace.languageChoices);
+  return sum(
+    race && race.languageChoices,
+    subrace && subrace.languageChoices,
+    background && background.languageChoices,
+  );
 }
 
 export function getLevelProgress(char) {
@@ -60,10 +69,14 @@ export function getProficiencyBonus(char) {
   return Math.floor(((char.level || 1) + 7) / 4);
 }
 
-export function getProficientSkills(char, raceData) {
+export function getProficientSkills(char, raceData, backgroundData) {
   const race = raceData || getRace(char);
+  const background = backgroundData || getBackground(char);
 
-  const profSkills = new Set((race && race.skills) || []);
+  const profSkills = new Set([
+    ...((race && race.skills) || []),
+    ...((background && background.skills) || []),
+  ]);
   return Array.from(profSkills);
 }
 

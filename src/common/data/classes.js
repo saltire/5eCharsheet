@@ -38,9 +38,9 @@ export default [
       'Rapier',
       'Shortsword',
     ],
-    tools: [
-      'Three musical instruments',
-    ],
+    toolChoices: {
+      'Musical Instrument': 3,
+    },
     savingThrows: [
       'Dexterity',
       'Charisma',

@@ -1,10 +1,12 @@
 import uuid from 'uuid/v4';
 
+import backgrounds from './data/backgrounds';
 import classes from './data/classes';
 import races from './data/races';
 
 
 export {
+  backgrounds,
   classes,
   races,
 };
@@ -28,22 +30,6 @@ export const alignments = [
   'Lawful Evil',
   'Neutral Evil',
   'Chaotic Evil',
-];
-
-export const backgrounds = [
-  'Acolyte',
-  'Charlatan',
-  'Criminal',
-  'Entertainer',
-  'Folk Hero',
-  'Guild Artisan',
-  'Hermit',
-  'Noble',
-  'Outlander',
-  'Sage',
-  'Sailor',
-  'Soldier',
-  'Urchin',
 ];
 
 export const languages = [
