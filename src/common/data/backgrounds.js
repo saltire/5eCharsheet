@@ -6,6 +6,18 @@ export default [
       'Religion',
     ],
     languageChoices: 2,
+    equipment: [
+      'Holy symbol',
+      [
+        'Prayer book',
+        'Prayer wheel',
+      ],
+      { Incense: 5 },
+      'Vestments',
+      'Common clothes',
+      'Belt pouch',
+      { gp: 15 },
+    ],
   },
   {
     label: 'Charlatan',
@@ -14,8 +26,20 @@ export default [
       'Sleight of Hand',
     ],
     tools: [
-      'Disguise Kit',
-      'Forgery Kit',
+      'Disguise kit',
+      'Forgery kit',
+    ],
+    equipment: [
+      'Fine clothes',
+      'Disguise kit',
+      [
+        { 'Stoppered bottle of colored liquid': 10 },
+        'Weighted dice',
+        'Deck of marked cards',
+        'Signet ring',
+      ],
+      'Belt pouch',
+      { gp: 15 },
     ],
   },
   {
@@ -25,11 +49,17 @@ export default [
       'Stealth',
     ],
     tools: [
-      "Thieves' Tools",
+      "Thieves' tools",
     ],
     toolChoices: {
-      'Gaming Set': 1,
+      'Gaming set': 1,
     },
+    equipment: [
+      'Crowbar',
+      'Dark common clothes with hood',
+      'Belt pouch',
+      { gp: 15 },
+    ],
   },
   {
     label: 'Entertainer',
@@ -38,11 +68,22 @@ export default [
       'Performance',
     ],
     tools: [
-      'Disguise Kit',
+      'Disguise kit',
     ],
     toolChoices: {
-      'Musical Instrument': 1,
+      'Musical instrument': 1,
     },
+    equipment: [
+      'Musical instrument',
+      [
+        'Love letter',
+        'Lock of hair',
+        'Trinket',
+      ],
+      'Costume',
+      'Belt pouch',
+      { gp: 15 },
+    ],
   },
   {
     label: 'Folk Hero',
@@ -51,8 +92,16 @@ export default [
       'Survival',
     ],
     tools: [
-      "Artisan's Tools",
-      'Vehicle (Land)',
+      "Artisan's tools",
+      'Vehicle (land)',
+    ],
+    equipment: [
+      "Artisan's tools",
+      'Shovel',
+      'Iron pot',
+      'Common clothes',
+      'Belt pouch',
+      { gp: 10 },
     ],
   },
   {
@@ -62,9 +111,16 @@ export default [
       'Persuasion',
     ],
     tools: [
-      "Artisan's Tools",
+      "Artisan's tools",
     ],
     languageChoices: 1,
+    equipment: [
+      "Artisan's tools",
+      'Letter of introduction from your guild',
+      "Traveler's clothes",
+      'Belt pouch',
+      { gp: 15 },
+    ],
   },
   {
     label: 'Hermit',
@@ -73,9 +129,16 @@ export default [
       'Religion',
     ],
     tools: [
-      'Herbalism Kit',
+      'Herbalism kit',
     ],
     languageChoices: 1,
+    equipment: [
+      'Scroll case stuffed with notes',
+      'Winter blanket',
+      'Common clothes',
+      'Herbalism kit',
+      { gp: 5 },
+    ],
   },
   {
     label: 'Noble',
@@ -84,9 +147,16 @@ export default [
       'Persuasion',
     ],
     toolChoices: {
-      'Gaming Set': 1,
+      'Gaming set': 1,
     },
     languageChoices: 1,
+    equipment: [
+      'Fine clothes',
+      'Signet ring',
+      'Scroll of pedigree',
+      'Purse',
+      { gp: 25 },
+    ],
   },
   {
     label: 'Outlander',
@@ -95,9 +165,17 @@ export default [
       'Survival',
     ],
     toolChoices: {
-      'Musical Instrument': 1,
+      'Musical instrument': 1,
     },
     languageChoices: 1,
+    equipment: [
+      'Staff',
+      'Hunting trap',
+      'Trophy from an animal',
+      "Traveler's clothes",
+      'Belt pouch',
+      { gp: 10 },
+    ],
   },
   {
     label: 'Sage',
@@ -106,6 +184,15 @@ export default [
       'History',
     ],
     languageChoices: 2,
+    equipment: [
+      'Bottle of black ink',
+      'Quill',
+      'Small knife',
+      'Letter from a dead colleague',
+      'Common clothes',
+      'Belt pouch',
+      { gp: 10 },
+    ],
   },
   {
     label: 'Sailor',
@@ -114,8 +201,16 @@ export default [
       'Perception',
     ],
     tools: [
-      "Navigator's Tools",
-      'Vehicle (Water)',
+      "Navigator's tools",
+      'Vehicle (water)',
+    ],
+    equipment: [
+      'Club',
+      '50 feet of silk rope',
+      'Lucky charm',
+      'Common clothes',
+      'Belt pouch',
+      { gp: 10 },
     ],
   },
   {
@@ -125,11 +220,22 @@ export default [
       'Intimidation',
     ],
     tools: [
-      'Vehicle (Land)',
+      'Vehicle (land)',
     ],
     toolChoices: {
-      'Gaming Set': 1,
+      'Gaming set': 1,
     },
+    equipment: [
+      'Rank insignia',
+      'Trophy from a fallen enemy',
+      [
+        'Bone dice',
+        'Deck of cards',
+      ],
+      'Common clothes',
+      'Belt pouch',
+      { gp: 10 },
+    ],
   },
   {
     label: 'Urchin',
@@ -138,8 +244,17 @@ export default [
       'Stealth',
     ],
     tools: [
-      'Disguise Kit',
-      "Thieves' Tools",
+      'Disguise kit',
+      "Thieves' tools",
+    ],
+    equipment: [
+      'Small knife',
+      'Map of home city',
+      'Pet mouse',
+      'Token to remember your parents by',
+      'Common clothes',
+      'Belt pouch',
+      { gp: 10 },
     ],
   },
 ];

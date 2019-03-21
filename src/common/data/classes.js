@@ -24,6 +24,18 @@ export default [
       'Perception',
       'Survival',
     ],
+    equipment: [
+      [
+        'Greataxe',
+        'Martial+Melee',
+      ],
+      [
+        { Handaxe: 2 },
+        'Simple',
+      ],
+      "Explorer's pack",
+      { Javelin: 4 },
+    ],
   },
   {
     label: 'Bard',
@@ -33,19 +45,33 @@ export default [
     ],
     weapons: [
       'Simple',
-      'Hand Crossbow',
+      'Hand crossbow',
       'Longsword',
       'Rapier',
       'Shortsword',
     ],
     toolChoices: {
-      'Musical Instrument': 3,
+      'Musical instrument': 3,
     },
     savingThrows: [
       'Dexterity',
       'Charisma',
     ],
     skillChoices: 3,
+    equipment: [
+      [
+        'Rapier',
+        'Longsword',
+        'Simple',
+      ],
+      [
+        "Diplomat's pack",
+        "Entertainer's pack",
+      ],
+      'Musical instrument',
+      'Leather armor',
+      'Dagger',
+    ],
   },
   {
     label: 'Cleric',
@@ -70,6 +96,30 @@ export default [
       'Persuasion',
       'Religion',
     ],
+    equipment: [
+      [
+        'Mace',
+        'Warhammer',
+      ],
+      [
+        'Scale mail',
+        'Leather armor',
+        'Chain mail',
+      ],
+      [
+        [
+          'Light crossbow',
+          { Bolt: 20 },
+        ],
+        'Simple',
+      ],
+      [
+        "Priest's pack",
+        "Explorer's pack",
+      ],
+      'Shield',
+      'Holy symbol',
+    ],
   },
   {
     label: 'Druid',
@@ -93,7 +143,7 @@ export default [
       'Spear',
     ],
     tools: [
-      'Herbalism Kit',
+      'Herbalism kit',
     ],
     savingThrows: [
       'Intelligence',
@@ -109,6 +159,19 @@ export default [
       'Perception',
       'Religion',
       'Survival',
+    ],
+    equipment: [
+      [
+        'Wooden shield',
+        'Simple',
+      ],
+      [
+        'Scimitar',
+        'Simple+Melee',
+      ],
+      'Leather armor',
+      "Explorer's pack",
+      'Druidic focus',
     ],
   },
   {
@@ -137,6 +200,32 @@ export default [
       'Perception',
       'Survival',
     ],
+    equipment: [
+      [
+        'Chain Mail',
+        [
+          'Leather armor',
+          'Longbow',
+          { Arrow: 20 },
+        ],
+      ],
+      'Martial',
+      [
+        'Martial',
+        'Shield',
+      ],
+      [
+        [
+          'Light crossbow',
+          { Bolt: 20 },
+        ],
+        { Handaxe: 2 },
+      ],
+      [
+        "Dungeoneer's pack",
+        "Explorer's pack",
+      ],
+    ],
   },
   {
     label: 'Monk',
@@ -157,6 +246,17 @@ export default [
       'Insight',
       'Religion',
       'Stealth',
+    ],
+    equipment: [
+      [
+        'Shortsword',
+        'Simple',
+      ],
+      [
+        "Dungeoneer's pack",
+        "Explorer's pack",
+      ],
+      { Dart: 10 },
     ],
   },
   {
@@ -182,6 +282,23 @@ export default [
       'Medicine',
       'Persuasion',
       'Religion',
+    ],
+    equipment: [
+      'Martial',
+      [
+        'Martial',
+        'Shield',
+      ],
+      [
+        { Javelin: 5 },
+        'Simple+Melee',
+      ],
+      [
+        "Priest's pack",
+        "Explorer's pack",
+      ],
+      'Chain mail',
+      'Holy symbol',
     ],
   },
   {
@@ -211,6 +328,22 @@ export default [
       'Stealth',
       'Survival',
     ],
+    equipment: [
+      [
+        'Scale mail',
+        'Leather armor',
+      ],
+      [
+        { Shortsword: 2 },
+        { 'Simple+Melee': 2 },
+      ],
+      [
+        "Dungeoneer's pack",
+        "Explorer's pack",
+      ],
+      'Longbow',
+      { Arrow: 20 },
+    ],
   },
   {
     label: 'Rogue',
@@ -220,13 +353,13 @@ export default [
     ],
     weapons: [
       'Simple',
-      'Hand Crossbow',
+      'Hand crossbow',
       'Longsword',
       'Rapier',
       'Shortsword',
     ],
     tools: [
-      "Thieves' Tools",
+      "Thieves' tools",
     ],
     savingThrows: [
       'Dexterity',
@@ -246,6 +379,27 @@ export default [
       'Sleight of Hand',
       'Stealth',
     ],
+    equipment: [
+      [
+        'Rapier',
+        'Shortsword',
+      ],
+      [
+        [
+          'Shortbow',
+          { Arrow: 20 },
+        ],
+        'Shortsword',
+      ],
+      [
+        "Burglar's pack",
+        "Dungeoneer's pack",
+        "Explorer's pack",
+      ],
+      'Leather armor',
+      { Dagger: 2 },
+      "Thieves' tools",
+    ],
   },
   {
     label: 'Sorcerer',
@@ -255,7 +409,7 @@ export default [
       'Dart',
       'Sling',
       'Quarterstaff',
-      'Light Crossbow',
+      'Light crossbow',
     ],
     savingThrows: [
       'Constitution',
@@ -269,6 +423,24 @@ export default [
       'Intimidation',
       'Persuasion',
       'Religion',
+    ],
+    equipment: [
+      [
+        [
+          'Light crossbow',
+          { Bolt: 20 },
+        ],
+        'Simple',
+      ],
+      [
+        'Component pouch',
+        'Arcane focus',
+      ],
+      [
+        "Dungeoneer's pack",
+        "Explorer's pack",
+      ],
+      { Dagger: 2 },
     ],
   },
   {
@@ -294,6 +466,26 @@ export default [
       'Nature',
       'Religion',
     ],
+    equipment: [
+      [
+        [
+          'Light crossbow',
+          { Bolt: 20 },
+        ],
+        'Simple',
+      ],
+      [
+        'Component pouch',
+        'Arcane focus',
+      ],
+      [
+        "Scholar's pack",
+        "Dungeoneer's pack",
+      ],
+      'Leather armor',
+      'Simple',
+      { Dagger: 2 },
+    ],
   },
   {
     label: 'Wizard',
@@ -303,7 +495,7 @@ export default [
       'Dart',
       'Sling',
       'Quarterstaff',
-      'Light Crossbow',
+      'Light crossbow',
     ],
     savingThrows: [
       'Intelligence',
@@ -317,6 +509,21 @@ export default [
       'Investigation',
       'Medicine',
       'Religion',
+    ],
+    equipment: [
+      [
+        'Quarterstaff',
+        'Dagger',
+      ],
+      [
+        'Component pouch',
+        'Arcane focus',
+      ],
+      [
+        "Scholar's pack",
+        "Explorer's pack",
+      ],
+      'Spellbook',
     ],
   },
 ];

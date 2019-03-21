@@ -76,12 +76,12 @@ export default [
     weapons: [
       'Battleaxe',
       'Handaxe',
-      'Throwing Hammer',
+      'Throwing hammer',
     ],
     tools: [
-      "Smith's Tools",
-      "Brewer's Supplies",
-      "Mason's Tools",
+      "Smith's tools",
+      "Brewer's supplies",
+      "Mason's tools",
     ],
     languages: [
       'Common',
@@ -166,7 +166,7 @@ export default [
         weapons: [
           'Rapier',
           'Shortsword',
-          'Hand Crossbow',
+          'Hand crossbow',
         ],
       },
     ],
@@ -202,7 +202,7 @@ export default [
           Constitution: 1,
         },
         tools: [
-          "Artisan's Tools",
+          "Artisan's tools",
         ],
       },
     ],
