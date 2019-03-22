@@ -1,6 +1,7 @@
 module.exports = {
   extends: 'airbnb',
   env: {
+    'jest': true,
     'react-native/react-native': true,
   },
   plugins: [

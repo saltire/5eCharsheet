@@ -8,8 +8,8 @@ export default [
       'Shield',
     ],
     weapons: [
-      'Simple',
-      'Martial',
+      { label: 'Simple weapon', tags: ['Simple'] },
+      { label: 'Martial weapon', tags: ['Martial'] },
     ],
     savingThrows: [
       'Strength',
@@ -27,14 +27,14 @@ export default [
     equipment: [
       [
         'Greataxe',
-        'Martial+Melee',
+        { label: 'Martial melee weapon', tags: ['Martial', 'Melee'] },
       ],
       [
-        { Handaxe: 2 },
-        'Simple',
+        { label: 'Handaxe', count: 2 },
+        { label: 'Simple weapon', tags: ['Simple'] },
       ],
       "Explorer's pack",
-      { Javelin: 4 },
+      { label: 'Javelin', count: 4 },
     ],
   },
   {
@@ -44,7 +44,7 @@ export default [
       'Light',
     ],
     weapons: [
-      'Simple',
+      { label: 'Simple weapon', tags: ['Simple'] },
       'Hand crossbow',
       'Longsword',
       'Rapier',
@@ -62,7 +62,7 @@ export default [
       [
         'Rapier',
         'Longsword',
-        'Simple',
+        { label: 'Simple weapon', tags: ['Simple'] },
       ],
       [
         "Diplomat's pack",
@@ -82,7 +82,7 @@ export default [
       'Shield',
     ],
     weapons: [
-      'Simple',
+      { label: 'Simple weapon', tags: ['Simple'] },
     ],
     savingThrows: [
       'Wisdom',
@@ -109,9 +109,9 @@ export default [
       [
         [
           'Light crossbow',
-          { Bolt: 20 },
+          { label: 'Bolt', count: 20 },
         ],
-        'Simple',
+        { label: 'Simple weapon', tags: ['Simple'] },
       ],
       [
         "Priest's pack",
@@ -163,11 +163,11 @@ export default [
     equipment: [
       [
         'Wooden shield',
-        'Simple',
+        { label: 'Simple weapon', tags: ['Simple'] },
       ],
       [
         'Scimitar',
-        'Simple+Melee',
+        { label: 'Simple melee weapon', tags: ['Simple', 'Melee'] },
       ],
       'Leather armor',
       "Explorer's pack",
@@ -182,8 +182,8 @@ export default [
       'Shield',
     ],
     weapons: [
-      'Simple',
-      'Martial',
+      { label: 'Simple weapon', tags: ['Simple'] },
+      { label: 'Martial weapon', tags: ['Martial'] },
     ],
     savingThrows: [
       'Strength',
@@ -206,20 +206,20 @@ export default [
         [
           'Leather armor',
           'Longbow',
-          { Arrow: 20 },
+          { label: 'Arrow', count: 20 },
         ],
       ],
-      'Martial',
+      { label: 'Martial weapon', tags: ['Martial'] },
       [
-        'Martial',
+        { label: 'Martial weapon', tags: ['Martial'] },
         'Shield',
       ],
       [
         [
           'Light crossbow',
-          { Bolt: 20 },
+          { label: 'Bolt', count: 20 },
         ],
-        { Handaxe: 2 },
+        { label: 'Handaxe', count: 2 },
       ],
       [
         "Dungeoneer's pack",
@@ -231,7 +231,7 @@ export default [
     label: 'Monk',
     hitDie: 8,
     weapons: [
-      'Simple',
+      { label: 'Simple weapon', tags: ['Simple'] },
       'Shortsword',
     ],
     savingThrows: [
@@ -250,13 +250,13 @@ export default [
     equipment: [
       [
         'Shortsword',
-        'Simple',
+        { label: 'Simple weapon', tags: ['Simple'] },
       ],
       [
         "Dungeoneer's pack",
         "Explorer's pack",
       ],
-      { Dart: 10 },
+      { label: 'Dart', count: 10 },
     ],
   },
   {
@@ -267,8 +267,8 @@ export default [
       'Shield',
     ],
     weapons: [
-      'Simple',
-      'Martial',
+      { label: 'Simple weapon', tags: ['Simple'] },
+      { label: 'Martial weapon', tags: ['Martial'] },
     ],
     savingThrows: [
       'Wisdom',
@@ -284,14 +284,14 @@ export default [
       'Religion',
     ],
     equipment: [
-      'Martial',
+      { label: 'Martial weapon', tags: ['Martial'] },
       [
-        'Martial',
+        { label: 'Martial weapon', tags: ['Martial'] },
         'Shield',
       ],
       [
-        { Javelin: 5 },
-        'Simple+Melee',
+        { label: 'Javelin', count: 5 },
+        { label: 'Simple melee weapon', tags: ['Simple', 'Melee'] },
       ],
       [
         "Priest's pack",
@@ -310,8 +310,8 @@ export default [
       'Shield',
     ],
     weapons: [
-      'Simple',
-      'Martial',
+      { label: 'Simple weapon', tags: ['Simple'] },
+      { label: 'Martial weapon', tags: ['Martial'] },
     ],
     savingThrows: [
       'Strength',
@@ -334,15 +334,15 @@ export default [
         'Leather armor',
       ],
       [
-        { Shortsword: 2 },
-        { 'Simple+Melee': 2 },
+        { label: 'Shortsword', count: 2 },
+        { label: 'Simple melee weapon', tags: ['Simple', 'Melee'], count: 2 },
       ],
       [
         "Dungeoneer's pack",
         "Explorer's pack",
       ],
       'Longbow',
-      { Arrow: 20 },
+      { label: 'Arrow', count: 20 },
     ],
   },
   {
@@ -352,7 +352,7 @@ export default [
       'Light',
     ],
     weapons: [
-      'Simple',
+      { label: 'Simple weapon', tags: ['Simple'] },
       'Hand crossbow',
       'Longsword',
       'Rapier',
@@ -387,7 +387,7 @@ export default [
       [
         [
           'Shortbow',
-          { Arrow: 20 },
+          { label: 'Arrow', count: 20 },
         ],
         'Shortsword',
       ],
@@ -397,7 +397,7 @@ export default [
         "Explorer's pack",
       ],
       'Leather armor',
-      { Dagger: 2 },
+      { label: 'Dagger', count: 2 },
       "Thieves' tools",
     ],
   },
@@ -428,9 +428,9 @@ export default [
       [
         [
           'Light crossbow',
-          { Bolt: 20 },
+          { label: 'Bolt', count: 20 },
         ],
-        'Simple',
+        { label: 'Simple weapon', tags: ['Simple'] },
       ],
       [
         'Component pouch',
@@ -440,7 +440,7 @@ export default [
         "Dungeoneer's pack",
         "Explorer's pack",
       ],
-      { Dagger: 2 },
+      { label: 'Dagger', count: 2 },
     ],
   },
   {
@@ -450,7 +450,7 @@ export default [
       'Light',
     ],
     weapons: [
-      'Simple',
+      { label: 'Simple weapon', tags: ['Simple'] },
     ],
     savingThrows: [
       'Wisdom',
@@ -470,9 +470,9 @@ export default [
       [
         [
           'Light crossbow',
-          { Bolt: 20 },
+          { label: 'Bolt', count: 20 },
         ],
-        'Simple',
+        { label: 'Simple weapon', tags: ['Simple'] },
       ],
       [
         'Component pouch',
@@ -483,8 +483,8 @@ export default [
         "Dungeoneer's pack",
       ],
       'Leather armor',
-      'Simple',
-      { Dagger: 2 },
+      { label: 'Simple weapon', tags: ['Simple'] },
+      { label: 'Dagger', count: 2 },
     ],
   },
   {

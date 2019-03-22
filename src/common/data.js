@@ -3,12 +3,14 @@ import uuid from 'uuid/v4';
 import backgrounds from './data/backgrounds';
 import classes from './data/classes';
 import races from './data/races';
+import weapons from './data/weapons';
 
 
 export {
   backgrounds,
   classes,
   races,
+  weapons,
 };
 
 export const abilities = [

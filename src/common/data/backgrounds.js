@@ -12,11 +12,11 @@ export default [
         'Prayer book',
         'Prayer wheel',
       ],
-      { Incense: 5 },
+      { label: 'Stick of incense', count: 5 },
       'Vestments',
       'Common clothes',
       'Belt pouch',
-      { gp: 15 },
+      { label: 'gp', count: 15 },
     ],
   },
   {
@@ -33,13 +33,13 @@ export default [
       'Fine clothes',
       'Disguise kit',
       [
-        { 'Stoppered bottle of colored liquid': 10 },
+        { label: 'Stoppered bottle of colored liquid', count: 10 },
         'Weighted dice',
         'Deck of marked cards',
         'Signet ring',
       ],
       'Belt pouch',
-      { gp: 15 },
+      { label: 'gp', count: 15 },
     ],
   },
   {
@@ -58,7 +58,7 @@ export default [
       'Crowbar',
       'Dark common clothes with hood',
       'Belt pouch',
-      { gp: 15 },
+      { label: 'gp', count: 15 },
     ],
   },
   {
@@ -82,7 +82,7 @@ export default [
       ],
       'Costume',
       'Belt pouch',
-      { gp: 15 },
+      { label: 'gp', count: 15 },
     ],
   },
   {
@@ -101,7 +101,7 @@ export default [
       'Iron pot',
       'Common clothes',
       'Belt pouch',
-      { gp: 10 },
+      { label: 'gp', count: 10 },
     ],
   },
   {
@@ -119,7 +119,7 @@ export default [
       'Letter of introduction from your guild',
       "Traveler's clothes",
       'Belt pouch',
-      { gp: 15 },
+      { label: 'gp', count: 15 },
     ],
   },
   {
@@ -137,7 +137,7 @@ export default [
       'Winter blanket',
       'Common clothes',
       'Herbalism kit',
-      { gp: 5 },
+      { label: 'gp', count: 5 },
     ],
   },
   {
@@ -155,7 +155,7 @@ export default [
       'Signet ring',
       'Scroll of pedigree',
       'Purse',
-      { gp: 25 },
+      { label: 'gp', count: 25 },
     ],
   },
   {
@@ -174,7 +174,7 @@ export default [
       'Trophy from an animal',
       "Traveler's clothes",
       'Belt pouch',
-      { gp: 10 },
+      { label: 'gp', count: 10 },
     ],
   },
   {
@@ -191,7 +191,7 @@ export default [
       'Letter from a dead colleague',
       'Common clothes',
       'Belt pouch',
-      { gp: 10 },
+      { label: 'gp', count: 10 },
     ],
   },
   {
@@ -210,7 +210,7 @@ export default [
       'Lucky charm',
       'Common clothes',
       'Belt pouch',
-      { gp: 10 },
+      { label: 'gp', count: 10 },
     ],
   },
   {
@@ -234,7 +234,7 @@ export default [
       ],
       'Common clothes',
       'Belt pouch',
-      { gp: 10 },
+      { label: 'gp', count: 10 },
     ],
   },
   {
@@ -254,7 +254,7 @@ export default [
       'Token to remember your parents by',
       'Common clothes',
       'Belt pouch',
-      { gp: 10 },
+      { label: 'gp', count: 10 },
     ],
   },
 ];
