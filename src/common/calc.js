@@ -30,6 +30,16 @@ export function getAbilityBonuses(char, raceData) {
   return bonuses;
 }
 
+export function getEquipment(char, classData, backgroundData) {
+  const clss = classData || getClass(char);
+  const background = backgroundData || getBackground(char);
+
+  return Array.from(new Set([
+    ...((clss && clss.equipment) || []),
+    ...((background && background.equipment) || []),
+  ]));
+}
+
 export function getLanguages(char, raceData) {
   const race = raceData || getRace(char);
   const subrace = getSubrace(char, race);

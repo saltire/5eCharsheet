@@ -177,6 +177,15 @@ export default function Sheet({ char, onUpdate, openEditor }) {
           {allLanguages.sort().join(', ')}
         </TouchableTextBox>
       </View>
+
+      <View style={styles.row}>
+        <TouchableTextBox
+          placeholder='Equipment'
+          onPress={() => openEditor('equipment')}
+        >
+          Equipment
+        </TouchableTextBox>
+      </View>
     </View>
   );
 }

@@ -3,6 +3,7 @@ import { AsyncStorage, Modal, StatusBar, StyleSheet, Text, View } from 'react-na
 
 import AbilityEditor from './modals/AbilityEditor';
 import AlignmentEditor from './modals/AlignmentEditor';
+import EquipmentEditor from './modals/EquipmentEditor';
 import ExperienceEditor from './modals/ExperienceEditor';
 import FlexButtons from './common/FlexButtons';
 import HitPointEditor from './modals/HitPointEditor';
@@ -59,6 +60,10 @@ const modals = {
     title: 'Alignment',
     component: AlignmentEditor,
     narrow: true,
+  },
+  equipment: {
+    title: 'Equipment',
+    component: EquipmentEditor,
   },
   hp: {
     title: 'Hit Points',
