@@ -7,11 +7,50 @@ import { weapons } from '../common/data';
 
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    marginVertical: 10,
+    paddingHorizontal: 20,
+  },
+  line: {
+    marginBottom: 5,
+  },
+  choices: {
+    marginBottom: 5,
+    borderRadius: 5,
+    backgroundColor: '#eee',
+  },
+  picker: {
+    height: 32,
+    marginLeft: 25,
+  },
+  pickerItem: {
+    paddingVertical: 0,
+    backgroundColor: 'blue',
+  },
+  bullet: {
+    width: 32,
+    textAlign: 'center',
+  },
+  placeholder: {
+    color: '#999',
+    fontStyle: 'italic',
+  },
   flexButtons: {
     marginHorizontal: 20,
     marginVertical: 10,
   },
 });
+
+function BulletText({ bullet = '•', children }) {
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <Text style={{ flex: 0, width: 32, textAlign: 'center', fontSize: 16, lineHeight: 32 }}>
+        {bullet}
+      </Text>
+      <Text style={{ fontSize: 16, lineHeight: 32 }}>{children}</Text>
+    </View>
+  );
+}
 
 export function describe(item) {
   if (typeof item === 'string') {
@@ -25,7 +64,7 @@ export function formatEquipment(equipment) {
   return (equipment || []).map((line) => {
     if (Array.isArray(line)) {
       return {
-        options: line.map(choice => ({
+        choices: line.map(choice => ({
           label: [].concat(choice).map(describe).join(', '),
           items: [].concat(choice).reduce((choiceItems, choiceItem) => {
             if (choiceItem.tags) {
@@ -34,7 +73,7 @@ export function formatEquipment(equipment) {
                 options: weapons
                   .filter(w => choiceItem.tags.every(tag => w.tags.includes(tag)))
                   .map(w => w.label),
-                // value: 0,
+                value: undefined,
               })));
             }
             if (typeof choiceItem === 'string') {
@@ -43,7 +82,7 @@ export function formatEquipment(equipment) {
             return choiceItems.concat(choiceItem);
           }, []),
         })),
-        // value: 0,
+        value: undefined,
       };
     }
     if (typeof line === 'string') {
@@ -71,38 +110,43 @@ export default class EquipmentEditor extends Component {
     /* eslint-disable react/no-array-index-key */
     return (
       <>
-        <View>
-          {equipment.map((line, l) => (
-            line.options ? (
-              <View key={l}>
+        <FlatList
+          style={styles.scrollContainer}
+          data={equipment}
+          renderItem={({ item: line, index: l }) => (
+            line.choices ? (
+              <View key={l} style={styles.line}>
                 <FlatList
-                  data={line.options}
+                  style={styles.choices}
+                  data={line.choices}
                   extraData={line.value}
-                  renderItem={({ item, index }) => (
+                  renderItem={({ item: choice, index: c }) => (
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() => this.setState(prevState => ({
                         equipment: prevState.equipment.map((ln, l2) => (l2 !== l ? ln : (
-                          Object.assign({}, ln, { value: index })))),
+                          Object.assign({}, ln, { value: c })))),
                       }))}
                     >
-                      <Text>{line.value === index ? '☑' : '☐'} {item.label}</Text>
+                      <BulletText bullet={line.value === c ? '☑' : '☐'}>{choice.label}</BulletText>
                     </TouchableOpacity>
                   )}
                   keyExtractor={item => item.label}
                 />
 
-                {line.options[line.value] && line.options[line.value].items.map((item, i) => (
+                {line.choices[line.value] ? line.choices[line.value].items.map((item, i) => (
                   item.options ? (
                     <Picker
                       key={i}
+                      style={styles.picker}
+                      itemStyle={styles.pickerItem}
                       selectedValue={item.options[item.value] || ''}
                       onValueChange={(newVal, newIndex) => this.setState(prevState => ({
                         equipment: prevState.equipment.map((ln, l2) => (l2 !== l ? ln : (
                           Object.assign({}, ln, {
-                            options: ln.options.map((opt, o) => (o !== line.value ? opt : (
-                              Object.assign({}, opt, {
-                                items: opt.items.map((it, i2) => (i2 !== i ? it : (
+                            choices: ln.choices.map((choice, c) => (c !== line.value ? choice : (
+                              Object.assign({}, choice, {
+                                items: choice.items.map((it, i2) => (i2 !== i ? it : (
                                   Object.assign({}, it, { value: newIndex - 1 })))),
                               })))),
                           })))),
@@ -112,13 +156,18 @@ export default class EquipmentEditor extends Component {
                       {item.options.map(opt => <Picker.Item key={opt} label={opt} value={opt} />)}
                     </Picker>
                   ) : (
-                    <Text key={i}>{describe(item)}</Text>
+                    <BulletText key={i}>{describe(item)}</BulletText>
                   )
-                ))}
+                )) : (
+                  <BulletText bullet=''>
+                    <Text style={styles.placeholder}>Select an option above</Text>
+                  </BulletText>
+                )}
               </View>
-            ) : <Text key={l}>{describe(line)}</Text>
-          ))}
-        </View>
+            ) : <View style={styles.line}><BulletText key={l}>{describe(line)}</BulletText></View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
 
         <View style={styles.flexButtons}>
           <FlexButtons

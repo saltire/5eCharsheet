@@ -24,7 +24,7 @@ const rawEq = [
 
 const formattedEq = [
   {
-    options: [
+    choices: [
       {
         label: 'Shortsword',
         items: [
@@ -61,7 +61,7 @@ const formattedEq = [
     ],
   },
   {
-    options: [
+    choices: [
       {
         label: 'Shortsword (2)',
         items: [
@@ -106,7 +106,7 @@ const formattedEq = [
     ],
   },
   {
-    options: [
+    choices: [
       {
         label: "Dungeoneer's pack",
         items: [
