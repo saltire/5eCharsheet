@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import ButtonGroup from '../common/ButtonGroup';
 import FlexButtons from '../common/FlexButtons';
+import NumberInput, { normalize } from '../common/NumberInput';
 import { getMaxHitPoints } from '../common/calc';
 
-
-function normalize(value) {
-  return Math.max(0, parseInt(value) || 0);
-}
 
 const styles = StyleSheet.create({
   flexButtons: {
@@ -92,12 +89,10 @@ export default class HitPointEditor extends Component {
 
         <View style={styles.form}>
           {tab !== 'Reset' && (
-            <TextInput
+            <NumberInput
               style={styles.formField}
-              value={`${value}`}
-              keyboardType='numeric'
-              onChangeText={text => this.setState({ value: text })}
-              onEndEditing={() => this.setState({ value: normalize(value) })}
+              value={value}
+              onChange={newValue => this.setState({ value: newValue })}
             />
           )}
         </View>

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { Slider, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Slider, StyleSheet, Text, View } from 'react-native';
 
 import ButtonGroup from '../common/ButtonGroup';
 import FlexButtons from '../common/FlexButtons';
+import NumberInput, { normalize } from '../common/NumberInput';
 import { xpLevels } from '../common/data';
 import { commas } from '../common/utils';
 
-
-function normalize(value) {
-  return Math.max(0, parseInt(value) || 0);
-}
 
 const styles = StyleSheet.create({
   flexButtons: {
@@ -93,12 +90,10 @@ export default class ExperienceEditor extends Component {
 
         <View style={styles.form}>
           {tab !== 'Set at Level' ? (
-            <TextInput
+            <NumberInput
               style={styles.formField}
-              value={`${value}`}
-              keyboardType='numeric'
-              onChangeText={text => this.setState({ value: text })}
-              onEndEditing={() => this.setState({ value: normalize(value) })}
+              value={value}
+              onChange={newValue => this.setState({ value: newValue })}
             />
           ) : (
             <Slider
