@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   formField: {
     width: 80,
     height: 32,
-    marginEnd: 5,
     borderRadius: 3,
     backgroundColor: '#eee',
     fontSize: 20,

@@ -4,9 +4,16 @@ import { FlatList, Picker, StyleSheet, Text, TouchableOpacity, View } from 'reac
 import FlexButtons from '../common/FlexButtons';
 import { getEquipment } from '../common/calc';
 import { describe, formatEquipment, validateEquipment, outputEquipment } from '../common/equipment-utils';
+import { BulletText } from '../common/textBoxes';
 
 
 const styles = StyleSheet.create({
+  subheader: {
+    marginBottom: 5,
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   scrollContainer: {
     marginVertical: 10,
     paddingHorizontal: 20,
@@ -41,17 +48,6 @@ const styles = StyleSheet.create({
   },
 });
 
-function BulletText({ bullet = '•', children }) {
-  return (
-    <View style={{ flexDirection: 'row' }}>
-      <Text style={{ flex: 0, width: 32, textAlign: 'center', fontSize: 16, lineHeight: 32 }}>
-        {bullet}
-      </Text>
-      <Text style={{ fontSize: 16, lineHeight: 32 }}>{children}</Text>
-    </View>
-  );
-}
-
 export default class EquipmentEditor extends Component {
   constructor(props) {
     super(props);
@@ -70,6 +66,8 @@ export default class EquipmentEditor extends Component {
     /* eslint-disable react/no-array-index-key */
     return (
       <>
+        <Text style={styles.subheader}>Starting Gear</Text>
+
         <FlatList
           style={styles.scrollContainer}
           data={equipment}
