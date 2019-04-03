@@ -230,6 +230,7 @@ export default [
       Constitution: 1,
     },
     size: 'Medium',
+    speed: 30,
     darkvision: 60,
     skills: [
       'Intimidation',
