@@ -71,6 +71,7 @@ export default class EquipmentEditor extends Component {
         <FlatList
           style={styles.scrollContainer}
           data={equipment}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item: line, index: l }) => (
             line.choices ? (
               <View key={l} style={styles.line}>
@@ -78,6 +79,7 @@ export default class EquipmentEditor extends Component {
                   style={styles.choices}
                   data={line.choices}
                   extraData={line.value}
+                  keyExtractor={item => item.label}
                   renderItem={({ item: choice, index: c }) => (
                     <TouchableOpacity
                       activeOpacity={0.8}
@@ -89,7 +91,6 @@ export default class EquipmentEditor extends Component {
                       <BulletText bullet={line.value === c ? '☑' : '☐'}>{choice.label}</BulletText>
                     </TouchableOpacity>
                   )}
-                  keyExtractor={item => item.label}
                 />
 
                 {line.choices[line.value] ? line.choices[line.value].items.map((item, i) => (
@@ -124,7 +125,6 @@ export default class EquipmentEditor extends Component {
               </View>
             ) : <View style={styles.line}><BulletText key={l}>{describe(line)}</BulletText></View>
           )}
-          keyExtractor={(item, index) => index.toString()}
         />
 
         <View style={styles.flexButtons}>

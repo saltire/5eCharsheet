@@ -77,6 +77,7 @@ export default class SkillEditor extends Component {
         <SectionList
           style={styles.scrollContainer}
           sections={sections}
+          keyExtractor={language => language}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.sectionHeader}>{title}</Text>
           )}
@@ -109,7 +110,6 @@ export default class SkillEditor extends Component {
             </View>
           )}
           renderSectionFooter={() => <View style={styles.sectionFooter} />}
-          keyExtractor={language => language}
         />
 
         <Text style={styles.help}>Choices remaining: {choicesRemaining}</Text>

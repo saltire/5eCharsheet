@@ -112,6 +112,7 @@ export default class EquipmentEditor extends Component {
           <FlatList
             style={styles.scrollContainer}
             data={equipment}
+            keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <View style={styles.item}>
                 <View style={styles.row}>
@@ -143,7 +144,6 @@ export default class EquipmentEditor extends Component {
                 )}
               </View>
             )}
-            keyExtractor={(item, index) => index.toString()}
           />
         ) : (
           <>

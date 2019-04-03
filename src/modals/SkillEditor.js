@@ -100,6 +100,7 @@ export default class SkillEditor extends Component {
         <SectionList
           style={styles.scrollContainer}
           sections={sections}
+          keyExtractor={skill => skill.label}
           renderSectionHeader={({ section: { title: ability } }) => (
             <View style={styles.abilityHeaderRow}>
               <Text style={styles.abilityHeader}>{ability}</Text>
@@ -147,7 +148,6 @@ export default class SkillEditor extends Component {
             </View>
           )}
           renderSectionFooter={() => <View style={styles.abilityFooter} />}
-          keyExtractor={skill => skill.label}
         />
 
         <Text style={styles.help}>

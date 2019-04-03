@@ -66,14 +66,14 @@ export default function Sheet({ char, onUpdate, openEditor }) {
           onChangeText={text => onUpdate({ name: text })}
         />
 
+        <TextBox>Level {char.level}</TextBox>
+
         <TouchableTextBox
           placeholder='XP'
           onPress={() => openEditor('xp')}
         >
-          {commas(char.xp)}
+          {commas(char.xp)} XP
         </TouchableTextBox>
-
-        <TextBox>{char.level}</TextBox>
       </View>
 
       <View style={styles.row}>
