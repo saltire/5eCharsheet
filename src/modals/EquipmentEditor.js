@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     flex: 0,
     marginStart: 4,
   },
-  removeText: {
-    width: 32,
+  itemButtonText: {
+    width: 28,
     borderRadius: 3,
     backgroundColor: '#eee',
     lineHeight: 32,
@@ -122,7 +122,7 @@ export default class EquipmentEditor extends Component {
                     activeOpacity={0.8}
                     onPress={() => this.setState({ editingItem: item })}
                   >
-                    <Text style={styles.removeText}>
+                    <Text style={styles.itemButtonText}>
                       <MaterialIcons name='edit' size={16} />
                     </Text>
                   </TouchableOpacity>
@@ -133,7 +133,7 @@ export default class EquipmentEditor extends Component {
                       equipment: prevState.equipment.filter(it => it !== item),
                     }))}
                   >
-                    <Text style={styles.removeText}>
+                    <Text style={styles.itemButtonText}>
                       <MaterialIcons name='delete' size={16} />
                     </Text>
                   </TouchableOpacity>

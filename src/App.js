@@ -3,6 +3,7 @@ import { AsyncStorage, Modal, StatusBar, StyleSheet, Text, View } from 'react-na
 
 import AbilityEditor from './modals/AbilityEditor';
 import AlignmentEditor from './modals/AlignmentEditor';
+import Characters from './Characters';
 import EquipmentEditor from './modals/EquipmentEditor';
 import ExperienceEditor from './modals/ExperienceEditor';
 import FlexButtons from './common/FlexButtons';
@@ -88,52 +89,89 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      char: blankChar(),
+      characters: null,
+      charId: null,
       modal: null,
     };
 
+    this.selectCharacter = this.selectCharacter.bind(this);
+    this.deleteCharacter = this.deleteCharacter.bind(this);
+    this.updateCharacter = this.updateCharacter.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.clearCharacter = this.clearCharacter.bind(this);
-    this.loadCharacter = this.loadCharacter.bind(this);
-    this.saveCharacter = this.saveCharacter.bind(this);
-    this.updateChar = this.updateChar.bind(this);
     this.updateAndClose = this.updateAndClose.bind(this);
   }
 
   componentDidMount() {
-    this.loadCharacter();
+    this.loadCharacters();
   }
 
-  clearCharacter() {
-    this.setState({ char: blankChar() }, this.saveCharacter);
-  }
-
-  async loadCharacter() {
+  async loadCharacters() {
     try {
-      const savedChar = await AsyncStorage.getItem('char');
-      if (savedChar) {
-        this.setState({ char: JSON.parse(savedChar) });
-      }
+      const savedCharacters = await AsyncStorage.getItem('characters');
+      this.setState({ characters: savedCharacters ? JSON.parse(savedCharacters) : {} });
     }
     catch (err) {
-      console.error('Error loading character:', err);
+      console.error('Error loading characters:', err);
     }
   }
 
-  async saveCharacter() {
-    const { char } = this.state;
-
-    try {
-      await AsyncStorage.setItem('char', JSON.stringify(char));
+  selectCharacter(charId) {
+    if (charId) {
+      this.setState({ charId });
     }
-    catch (err) {
-      console.error('Error saving character:', err);
+    else {
+      const newChar = blankChar();
+      this.setState({ charId: newChar.id }, () => this.updateCharacter(newChar));
+    }
+    this.closeModal();
+  }
+
+  deleteCharacter(charId) {
+    if (charId) {
+      this.setState(
+        ({ characters, charId: currentCharId }) => {
+          const newCharacters = Object.assign({}, characters);
+          delete newCharacters[charId];
+          return {
+            characters: newCharacters,
+            charId: currentCharId === charId ? null : currentCharId,
+          };
+        },
+        async () => {
+          const { characters } = this.state;
+
+          try {
+            await AsyncStorage.setItem('characters', JSON.stringify(characters));
+          }
+          catch (err) {
+            console.error('Error deleting character:', err);
+          }
+        });
     }
   }
 
-  updateChar(update) {
-    this.setState(({ char }) => ({ char: Object.assign({}, char, update || {}) }),
-      this.saveCharacter);
+  updateCharacter(update) {
+    const { charId } = this.state;
+
+    if (charId) {
+      this.setState(
+        ({ characters }) => {
+          const newCharacters = Object.assign({}, characters || {}, {
+            [charId]: Object.assign({}, characters[charId] || {}, update || {}),
+          });
+          return { characters: newCharacters };
+        },
+        async () => {
+          const { characters } = this.state;
+
+          try {
+            await AsyncStorage.setItem('characters', JSON.stringify(characters));
+          }
+          catch (err) {
+            console.error('Error updating character:', err);
+          }
+        });
+    }
   }
 
   closeModal() {
@@ -141,53 +179,77 @@ export default class App extends Component {
   }
 
   updateAndClose(update) {
-    this.updateChar(update);
+    const { charId } = this.state;
+
+    this.updateCharacter(charId, update);
     this.closeModal();
   }
 
   render() {
-    const { char, modal } = this.state;
+    const { characters, charId, modal } = this.state;
+    const char = characters && characters[charId];
 
     return (
       <View style={[styles.main, { paddingTop: StatusBar.currentHeight }]}>
         <View style={styles.buttons}>
           <FlexButtons
             buttons={[
-              // { title: 'Load', onPress: this.loadCharacter },
-              // { title: 'Save', onPress: this.saveCharacter },
-              { title: 'Clear', onPress: this.clearCharacter },
+              { title: 'Characters', onPress: () => this.setState({ modal: 'characters' }) },
             ]}
           />
         </View>
 
-        <Sheet
-          key={char.id}
-          char={char}
-          onUpdate={this.updateChar}
-          openEditor={modalName => this.setState({ modal: modalName })}
-        />
-
-        {Object.entries(modals).map(([id, { title, component: ModalComponent, narrow }]) => (
-          <Modal
-            key={id}
-            visible={modal === id}
-            transparent
-            animationType='fade'
-            onRequestClose={this.closeModal}
-          >
-            <View style={styles.modalContainer}>
-              <View style={[styles.modal, !!narrow && styles.narrowModal]}>
-                <Text style={styles.modalHeader}>{title}</Text>
-
-                <ModalComponent
-                  char={char}
-                  onAccept={this.updateAndClose}
-                  onCancel={this.closeModal}
-                />
-              </View>
+        <Modal
+          visible={modal === 'characters'}
+          transparent
+          animationType='fade'
+          onRequestClose={this.closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={[styles.modal]}>
+              <Text style={styles.modalHeader}>Choose Character</Text>
+              <Characters
+                characters={characters && Object.values(characters)}
+                onSelect={this.selectCharacter}
+                onDelete={this.deleteCharacter}
+                onCancel={this.closeModal}
+              />
             </View>
-          </Modal>
-        ))}
+          </View>
+        </Modal>
+
+        {char && (
+          <>
+            <Sheet
+              key={char.id}
+              char={char}
+              onUpdate={this.updateCharacter}
+              openEditor={modalName => this.setState({ modal: modalName })}
+            />
+
+            {Object.entries(modals).map(([id, { title, component: ModalComponent, narrow }]) => (
+              <Modal
+                key={id}
+                visible={modal === id}
+                transparent
+                animationType='fade'
+                onRequestClose={this.closeModal}
+              >
+                <View style={styles.modalContainer}>
+                  <View style={[styles.modal, !!narrow && styles.narrowModal]}>
+                    <Text style={styles.modalHeader}>{title}</Text>
+
+                    <ModalComponent
+                      char={char}
+                      onAccept={this.updateAndClose}
+                      onCancel={this.closeModal}
+                    />
+                  </View>
+                </View>
+              </Modal>
+            ))}
+          </>
+        )}
       </View>
     );
   }
