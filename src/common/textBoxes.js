@@ -56,12 +56,3 @@ export const TouchableHeaderBox = ({ header, placeholder, disabled, children, on
     </View>
   </TouchableOpacity>
 );
-
-export const BulletText = ({ bullet = '•', style = {}, children }) => (
-  <View style={[{ flexDirection: 'row' }, style]}>
-    <Text style={{ flex: 0, width: 32, textAlign: 'center', fontSize: 16, lineHeight: 32 }}>
-      {bullet}
-    </Text>
-    <Text style={{ fontSize: 16, lineHeight: 32 }}>{children}</Text>
-  </View>
-);

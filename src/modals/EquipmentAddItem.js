@@ -43,20 +43,22 @@ export default class EquipmentAddItem extends Component {
   constructor(props) {
     super(props);
 
+    const { item } = props;
+
     this.state = {
-      label: '',
-      count: 1,
-      notes: '',
+      label: (item && item.label) || '',
+      count: (item && item.count) || 1,
+      notes: (item && item.notes) || '',
     };
   }
 
   render() {
-    const { onAccept, onCancel } = this.props;
+    const { item, onAccept, onCancel } = this.props;
     const { label, count, notes } = this.state;
 
     return (
       <>
-        <Text style={styles.subheader}>Add Item</Text>
+        <Text style={styles.subheader}>{item ? 'Edit' : 'Add'} Item</Text>
 
         <View style={styles.form}>
           <View style={styles.formLabel}><Text style={styles.formLabelText}>Name</Text></View>

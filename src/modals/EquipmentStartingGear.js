@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { FlatList, Picker, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import BulletText from '../common/BulletText';
 import FlexButtons from '../common/FlexButtons';
 import { getEquipment } from '../common/calc';
 import { describe, formatEquipment, validateEquipment, outputEquipment } from '../common/equipment-utils';
-import { BulletText } from '../common/textBoxes';
 
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 32,
-    marginLeft: 25,
+    marginLeft: 16,
   },
   pickerItem: {
     paddingVertical: 0,
