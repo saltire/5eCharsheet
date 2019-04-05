@@ -107,22 +107,36 @@ export default class App extends Component {
 
   async loadCharacters() {
     try {
-      const savedCharacters = await AsyncStorage.getItem('characters');
-      this.setState({ characters: savedCharacters ? JSON.parse(savedCharacters) : {} });
+      const [[, characters], [, charId]] = await AsyncStorage.multiGet(['characters', 'charId']);
+      this.setState({
+        characters: characters ? JSON.parse(characters) : {},
+        charId,
+      });
     }
     catch (err) {
       console.error('Error loading characters:', err);
     }
   }
 
-  selectCharacter(charId) {
+  async selectCharacter(charId) {
+    let newCharId;
     if (charId) {
-      this.setState({ charId });
+      newCharId = charId;
     }
     else {
       const newChar = blankChar();
-      this.setState({ charId: newChar.id }, () => this.updateCharacter(newChar));
+      newCharId = newChar.id;
+      await this.updateCharacter(newChar.id, newChar);
     }
+
+    this.setState({ charId: newCharId }, async () => {
+      try {
+        await AsyncStorage.setItem('charId', newCharId);
+      }
+      catch (err) {
+        console.error('Error selecting character:', err);
+      }
+    });
     this.closeModal();
   }
 
@@ -138,10 +152,11 @@ export default class App extends Component {
           };
         },
         async () => {
-          const { characters } = this.state;
+          const { characters, charId: currentCharId } = this.state;
 
           try {
-            await AsyncStorage.setItem('characters', JSON.stringify(characters));
+            await AsyncStorage.multiSet(
+              [['characters', JSON.stringify(characters)], ['charId', currentCharId]]);
           }
           catch (err) {
             console.error('Error deleting character:', err);
@@ -150,9 +165,7 @@ export default class App extends Component {
     }
   }
 
-  updateCharacter(update) {
-    const { charId } = this.state;
-
+  updateCharacter(charId, update) {
     if (charId) {
       this.setState(
         ({ characters }) => {
@@ -223,7 +236,7 @@ export default class App extends Component {
             <Sheet
               key={char.id}
               char={char}
-              onUpdate={this.updateCharacter}
+              onUpdate={update => this.updateCharacter(charId, update)}
               openEditor={modalName => this.setState({ modal: modalName })}
             />
 
