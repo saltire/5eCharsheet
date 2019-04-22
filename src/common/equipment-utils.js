@@ -1,4 +1,5 @@
 import { weapons } from './data';
+import { range } from './utils';
 
 
 export function describe(item) {
@@ -17,7 +18,7 @@ export function formatEquipment(equipment) {
           label: [].concat(choice).map(describe).join(', '),
           items: [].concat(choice).reduce((choiceItems, choiceItem) => {
             if (choiceItem.tags) {
-              return choiceItems.concat([...Array(choiceItem.count || 1)].map(() => ({
+              return choiceItems.concat(range(choiceItem.count || 1).map(() => ({
                 placeholder: choiceItem.label,
                 options: weapons
                   .filter(w => choiceItem.tags.every(tag => w.tags.includes(tag)))

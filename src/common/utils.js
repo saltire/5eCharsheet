@@ -6,12 +6,16 @@ export function mod(score) {
   return Number.isFinite(score) ? Math.floor(score / 2) - 5 : '';
 }
 
+export function range(size) {
+  return [...Array(size)];
+}
+
 export function sum(...values) {
   return values.reduce((s, v) => (s + (v || 0)), 0);
 }
 
 export function roll(num, sides, highest) {
-  return sum(...[...Array(num)]
+  return sum(...range(num)
     .map(() => Math.ceil(Math.random() * sides))
     .sort()
     .reverse()

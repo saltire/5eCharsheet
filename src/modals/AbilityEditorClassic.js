@@ -4,7 +4,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import FlexButtons from '../common/FlexButtons';
 import { abilities as abilityNames } from '../common/data';
-import { mod, roll, signed } from '../common/utils';
+import { mod, range, roll, signed } from '../common/utils';
 
 
 export default class AbilityEditorClassic extends Component {
@@ -21,7 +21,7 @@ export default class AbilityEditorClassic extends Component {
   }
 
   rollScores() {
-    this.setScores([...Array(6)].map(() => roll(4, 6, 3)));
+    this.setScores(range(6).map(() => roll(4, 6, 3)));
   }
 
   useSimpleScores() {
