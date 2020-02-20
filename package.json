@@ -10,17 +10,17 @@
     "test": "jest"
   },
   "dependencies": {
-    "@expo/vector-icons": "^10.0.1",
-    "expo": "^33.0.7",
-    "jest-expo": "^33.0.2",
-    "react": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "@expo/vector-icons": "^10.0.6",
+    "expo": "^36.0.0",
+    "jest-expo": "^36.0.0",
+    "react": "16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-draggable-flatlist": "^1.1.7",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-jest": "^24.5.0",
-    "babel-preset-expo": "^5.0.0",
+    "babel-preset-expo": "^8.0.0",
     "eslint": "^5.14.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
