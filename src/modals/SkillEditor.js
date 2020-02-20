@@ -87,7 +87,7 @@ export default class SkillEditor extends Component {
     const { char, onAccept, onCancel } = this.props;
     const { chosenSkills } = this.state;
 
-    const skillOptions = (getClass(char) || {}).skillOptions || [];
+    const { skillOptions } = getClass(char) || {};
     const profBonus = getProficiencyBonus(char);
     const otherSkills = getProficientSkills(char);
     const skillChoices = getSkillChoices(char);
@@ -122,7 +122,8 @@ export default class SkillEditor extends Component {
                     value={allSkills.includes(skill.label)}
                     disabled={otherSkills.includes(skill.label) ||
                       (!chosenSkills.includes(skill.label) &&
-                        (!choicesRemaining || !skillOptions.includes(skill.label)))}
+                        (!choicesRemaining ||
+                          (skillOptions && !skillOptions.includes(skill.label))))}
                     onChange={newValue => this.setState((prevState) => {
                       const newSkills = new Set(prevState.chosenSkills);
                       if (newValue) {
