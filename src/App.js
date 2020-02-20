@@ -144,7 +144,7 @@ export default class App extends Component {
     if (charId) {
       this.setState(
         ({ characters, charId: currentCharId }) => {
-          const newCharacters = Object.assign({}, characters);
+          const newCharacters = { ...characters };
           delete newCharacters[charId];
           return {
             characters: newCharacters,
@@ -169,9 +169,10 @@ export default class App extends Component {
     if (charId) {
       this.setState(
         ({ characters }) => {
-          const newCharacters = Object.assign({}, characters || {}, {
-            [charId]: Object.assign({}, characters[charId] || {}, update || {}),
-          });
+          const newCharacters = {
+            ...characters || {},
+            [charId]: { ...characters[charId] || {}, ...update || {} },
+          };
           return { characters: newCharacters };
         },
         async () => {

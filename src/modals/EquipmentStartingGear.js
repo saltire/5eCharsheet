@@ -84,8 +84,8 @@ export default class EquipmentEditor extends Component {
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() => this.setState(prevState => ({
-                        equipment: prevState.equipment.map((ln, l2) => (l2 !== l ? ln : (
-                          Object.assign({}, ln, { value: c })))),
+                        equipment: prevState.equipment.map((ln, l2) => (l2 !== l ? ln :
+                          { ...ln, value: c })),
                       }))}
                     >
                       <BulletText bullet={line.value === c ? '☑' : '☐'}>{choice.label}</BulletText>
@@ -101,14 +101,14 @@ export default class EquipmentEditor extends Component {
                       itemStyle={styles.pickerItem}
                       selectedValue={item.options[item.value] || ''}
                       onValueChange={(newVal, newIndex) => this.setState(prevState => ({
-                        equipment: prevState.equipment.map((ln, l2) => (l2 !== l ? ln : (
-                          Object.assign({}, ln, {
-                            choices: ln.choices.map((choice, c) => (c !== line.value ? choice : (
-                              Object.assign({}, choice, {
-                                items: choice.items.map((it, i2) => (i2 !== i ? it : (
-                                  Object.assign({}, it, { value: newIndex - 1 })))),
-                              })))),
-                          })))),
+                        equipment: prevState.equipment.map((ln, l2) => (l2 !== l ? ln : {
+                          ...ln,
+                          choices: ln.choices.map((choice, c) => (c !== line.value ? choice : {
+                            ...choice,
+                            items: choice.items.map((it, i2) => (i2 !== i ? it :
+                              { ...it, value: newIndex - 1 })),
+                          })),
+                        })),
                       }))}
                     >
                       <Picker.Item label={item.placeholder} value='' color='#999' />

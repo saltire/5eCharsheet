@@ -18,7 +18,7 @@ export default function AbilityEditorPointBuy({ abilities, bonuses, points, styl
               <Button
                 title='◀'
                 disabled={score <= 8}
-                onPress={() => onChange(Object.assign({}, abilities, { [ability]: score - 1 }))}
+                onPress={() => onChange({ ...abilities, [ability]: score - 1 })}
               />
             </View>
 
@@ -28,7 +28,7 @@ export default function AbilityEditorPointBuy({ abilities, bonuses, points, styl
               <Button
                 title='▶'
                 disabled={score >= 15 || points < 1 || (score >= 13 && points < 2)}
-                onPress={() => onChange(Object.assign({}, abilities, { [ability]: score + 1 }))}
+                onPress={() => onChange({ ...abilities, [ability]: score + 1 })}
               />
             </View>
 

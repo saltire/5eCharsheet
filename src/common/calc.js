@@ -23,7 +23,7 @@ export function getAbilityBonuses(char, raceData) {
   const race = raceData || getRace(char);
   const subrace = getSubrace(char, race);
 
-  const bonuses = Object.assign({}, (race && race.abilities) || {});
+  const bonuses = { ...(race && race.abilities) || {} };
   Object.entries((subrace && subrace.abilities) || {}).forEach(([ability, score]) => {
     bonuses[ability] = (bonuses[ability] || 0) + score;
   });

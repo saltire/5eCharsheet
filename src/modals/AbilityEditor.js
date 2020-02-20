@@ -80,7 +80,7 @@ export default class AbilityEditor extends Component {
 
     this.state = {
       tab: 'Classic',
-      classicAbilities: Object.assign({}, char.abilities),
+      classicAbilities: { ...char.abilities },
       buyAbilities: abilityNames.reduce((abs, name) => Object.assign(abs, { [name]: 8 }), {}),
       points: 27,
     };
